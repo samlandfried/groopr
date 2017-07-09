@@ -17,6 +17,7 @@
   },
   "homepage": "https://samlandfried.github.io/poodr-react",
   "devDependencies": {
-    "gh-pages": "^1.0.0"
+    "gh-pages": "^1.0.0",
+    "selenium-webdriver": "^3.4.0"
   }
 }
