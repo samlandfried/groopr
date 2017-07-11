@@ -21,7 +21,6 @@ export const makeMainRoutes = () => {
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
-            debugger;
             return <Callback {...props} />
           }}/>
         </div>

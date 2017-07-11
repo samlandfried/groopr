@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
+import Poodr from './Poodr'
 import './App.css';
 
 class App extends Component {
@@ -56,6 +57,16 @@ class App extends Component {
             }
           </Navbar.Header>
         </Navbar>
+        { isAuthenticated() && (
+            <Poodr {...this.props} />
+          )
+        }
+        { !isAuthenticated() && (
+            <p>
+              Please log in to continue
+            </p>
+          )
+        }
       </div>
     );
   }
