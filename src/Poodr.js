@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 
 export default class Poodr extends Component {
-  render(props) {
+  render() {
     return (
-      <p>
-        {localStorage.access_token}
-      </p>
+      null
     );
   }
 }

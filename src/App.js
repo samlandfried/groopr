@@ -20,11 +20,11 @@ class App extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (
-      <div>
+      <div id="App">
         <Navbar fluid>
           <Navbar.Header>
-            <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
+            <Navbar.Brand id="navbar-brand">
+              <a href="#">Poodr</a>
             </Navbar.Brand>
             <Button
               bsStyle="primary"
@@ -38,6 +38,7 @@ class App extends Component {
                   <Button
                     bsStyle="primary"
                     className="btn-margin"
+                    id="login"
                     onClick={this.login.bind(this)}
                   >
                     Log In
@@ -49,6 +50,7 @@ class App extends Component {
                   <Button
                     bsStyle="primary"
                     className="btn-margin"
+                    id="logout"
                     onClick={this.logout.bind(this)}
                   >
                     Log Out

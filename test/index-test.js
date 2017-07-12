@@ -21,11 +21,11 @@ test.describe('Poodr', function() {
 
   test.it('Loads', () => {
     driver.get(addr);
-    driver.wait(until.elementLocated({ css: '.App' }));
-    driver.findElement({ css: '.App-header h2' })
+    driver.wait(until.elementLocated({ css: '#App' }));
+    driver.findElement({ css: '.navbar-brand' })
       .getText()
       .then(header => {
-        assert.equal(header, 'Welcome to React');
+        assert.equal(header, 'Poodr');
       });
   });
 });
