@@ -16,6 +16,8 @@
 .env.test.local
 .env.production.local
 
+auth0-variables.js
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
