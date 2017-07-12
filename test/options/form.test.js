@@ -11,10 +11,9 @@ test.describe('Options select form', function() {
   test.beforeEach(() => {
     driver = new Builder()
       .forBrowser('chrome')
-      .build()
+      .build();
 
     login(driver);
-
   });
 
   test.afterEach(() => {
@@ -22,9 +21,53 @@ test.describe('Options select form', function() {
   });
 
   test.it('Loads', () => {
-    driver.findElement(By.id('logout')).getText()
+    driver.findElement(By.id('logout'))
+      .getText()
       .then(text => {
         assert.equal(text, 'Log Out');
+      });
+  });
+
+  test.it('Has an attractive UI', () => {
+    driver.findElement(By.id('grouping-strategy-select'))
+      .getText()
+      .then(text => {
+        assert.equal(text, 'Recommended')
+      });
+
+    driver.findElement(By.css('#grouping-strategy-select option'))
+      .then(options => {
+        assert.lengthOf(options, 2);
+      });
+
+    driver.findElement(By.id('group-size-select'))
+      .getText()
+      .then(option => {
+        assert.equal(option, 2);
+      });
+
+    driver.findElements(By.css('#group-size-select option'))
+      .then(options => {
+        assert.lengthOf(options, 6);
+      });
+
+    driver.findElement(By.id('odd-member-strategy-bigger'))
+    driver.findElement(By.id('odd-member-strategy-smaller'))
+    driver.findElements(By.xpath('//radio[checked="checked"]'))
+      .then(radioBtns => {
+        assert.lengthOf(radioBtns, 1);
+      });
+
+    driver.findElement(By.id('channel-search'))
+      .getText()
+      .then(searchTerm => {
+        assert.isEmpty(searchTerm);
+      });
+
+    driver.findElements(By.css('#channel-table tr'))
+      .then(rows => {
+        assert.isAbove(rows.length, 200);
+        assert.isBelow(rows.length, 1000);
       });
   });
 });
@@ -46,4 +89,4 @@ const login = driver => {
     driver.findElement(By.id('oauth_authorizify')).click();
     driver.wait(until.elementLocated(By.id('logout')));
   });
-}
+};

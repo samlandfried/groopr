@@ -30,7 +30,7 @@ test.describe('Poodr', function() {
 
   test.it('Is not logged in', () => {
     driver.get(addr);
-    driver.wait(until.elementLocated({ css: '#App' }));
+    driver.wait(until.elementLocated(By.css('#App')));
     driver.findElement(By.id('login'))
       .getText()
       .then(btn => {

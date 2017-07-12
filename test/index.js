@@ -1,2 +1,2 @@
-require('./index-test');
+require('./index.test');
 require('./options/form.test');
