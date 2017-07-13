@@ -18,15 +18,6 @@ test.describe('Options select form', function() {
     driver.quit();
   });
 
-  test.xit('Loads', () => {
-    login(driver);
-    driver.findElement(By.id('logout'))
-      .getText()
-      .then(text => {
-        assert.equal(text, 'Log Out');
-      });
-  });
-
   test.it('Has an attractive UI', () => {
     driver.get(addr + '/test');
     driver.findElement(By.id('grouping-strategy-select'))
@@ -52,6 +43,36 @@ test.describe('Options select form', function() {
 
     driver.findElement(By.id('channels'))
     driver.findElement(By.id('groups'))
+  });
+
+  test.describe('After login', () => {
+    test.beforeEach(() => {
+      login(driver);
+    });
+
+    test.xit('Allows a user to login w/ Slack info', () => {
+      driver.findElement(By.id('logout'))
+        .getText()
+        .then(text => {
+          assert.equal(text, 'Log Out');
+        });
+    });
+
+    test.it('Lets you know who is logged in', () => {
+      driver.findElement(By.id('logged-in-user'))
+        .getText()
+        .then(text => {
+          assert.includes(text, 'Welcome, Sam Landfried!');
+        });
+    });
+
+    test.xit('Can load all Slack channels and groups a user has access to', () => {
+      driver.findElements(By.css('#channels tr'))
+        .then(channels => {
+          assert.isAbove(channels.length, 200);
+          assert.isBelow(channels.length, 400);
+        });
+    });
   });
 });
 
