@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import App from './App';
+import Poodr from './Poodr/Poodr'
 // import Home from './Home/Home';
 import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
@@ -23,6 +24,8 @@ export const makeMainRoutes = () => {
             handleAuthentication(props);
             return <Callback {...props} />
           }}/>
+          {/* Don't publish this route */}
+          <Route path="/test" render={ props => <Poodr {...props} />} />
         </div>
       </BrowserRouter>
   );
