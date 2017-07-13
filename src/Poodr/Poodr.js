@@ -22,6 +22,27 @@ export default class Poodr extends Component {
           <option value="7">7</option>
         </select>
       </div>
+      <div id="odd-member-strategy">
+        <h2>Odd Member Strategy</h2>
+        <input type="radio" name="odd-member-strategy" value="bigger" checked="checked" /> Bigger groups <br />
+        <input type="radio" name="odd-member-strategy" value="smaller" /> Smaller groups <br />
+      </div>
+      <div id="channel-search">
+        <h2>Choose a Channel or Group</h2>
+        <input type="text" id="channel-search-input" />
+        <table id="channels" />
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+        <table id="groups" />
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+      </div>
     </form>
     );
   }

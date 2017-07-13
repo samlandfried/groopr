@@ -41,24 +41,17 @@ test.describe('Options select form', function() {
         assert.lengthOf(options, 6);
       });
 
-    driver.findElement(By.id('odd-member-strategy-bigger'))
-    driver.findElement(By.id('odd-member-strategy-smaller'))
-    driver.findElements(By.xpath('//radio[checked="checked"]'))
-      .then(radioBtns => {
-        assert.lengthOf(radioBtns, 1);
-      });
+    driver.findElement(By.css('input[name="odd-member-strategy"][value="bigger"]'))
+    driver.findElement(By.css('input[name="odd-member-strategy"][value="smaller"]'))
 
-    driver.findElement(By.id('channel-search'))
+    driver.findElement(By.id('channel-search-input'))
       .getText()
       .then(searchTerm => {
         assert.isEmpty(searchTerm);
       });
 
-    driver.findElements(By.css('#channel-table tr'))
-      .then(rows => {
-        assert.isAbove(rows.length, 200);
-        assert.isBelow(rows.length, 1000);
-      });
+    driver.findElement(By.id('channels'))
+    driver.findElement(By.id('groups'))
   });
 });
 
