@@ -36,11 +36,6 @@ test.describe('Options select form', function() {
       });
 
     driver.findElement(By.id('group-size-select'))
-      .getText()
-      .then(option => {
-        assert.equal(option, 2);
-      });
-
     driver.findElements(By.css('#group-size-select option'))
       .then(options => {
         assert.lengthOf(options, 6);
