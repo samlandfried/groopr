@@ -62,7 +62,7 @@ test.describe('Options select form', function() {
       driver.findElement(By.id('logged-in-user'))
         .getText()
         .then(text => {
-          assert.includes(text, 'Welcome, Sam Landfried!');
+          assert.include(text, 'Welcome, Sam Landfried!');
         });
     });
 
@@ -86,8 +86,8 @@ const login = driver => {
     driver.wait(until.titleIs('Sign in | Slack'));
     driver.findElement(By.css('.team_name_input')).sendKeys('luncherrollers');
     driver.findElement(By.id('submit_team_domain')).click();
-    driver.findElement(By.id('email')).sendKeys('ebassity@gmail.com');
-    driver.findElement(By.id('password')).sendKeys('ilovedogs');
+    driver.findElement(By.id('email')).sendKeys('samlandfried@gmail.com');
+    driver.findElement(By.id('password')).sendKeys('swabber');
     driver.findElement(By.id('signin_btn')).click();
     driver.wait(until.titleIs('Authorize access to your account | lunchers Slack'));
     driver.findElement(By.id('oauth_authorizify')).click();
