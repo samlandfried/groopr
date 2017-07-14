@@ -25,7 +25,8 @@ export const makeMainRoutes = () => {
             return <Callback {...props} />
           }}/>
           {/* Don't publish this route */}
-          <Route path="/test" render={ props => <Poodr {...props} />} />
+          <Route path="/test-options" render={ props => <Poodr {...props} />} />
+          <Route path="/test-notify" render={ props => <Poodr {...props} />} />
         </div>
       </BrowserRouter>
   );

@@ -19,7 +19,7 @@ test.describe('Options select form', function() {
   });
 
   test.it('Has an attractive UI', () => {
-    driver.get(addr + '/test');
+    driver.get(addr + '/test-options');
     driver.findElement(By.id('grouping-strategy-select'))
     driver.findElements(By.css('#grouping-strategy-select option'))
       .then(options => {

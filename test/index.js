@@ -1,3 +1,4 @@
 require('./index.test');
-require('./options/form.test');
-require('./models/SlackUser.test')
+require('./forms/optionsForm.test');
+require('./forms/notifyForm.test');
+require('./models/SlackUser.test');

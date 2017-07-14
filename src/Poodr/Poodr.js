@@ -21,6 +21,7 @@ export default class Poodr extends Component {
   render() {
     return (
       <div id="user-is-logged-in">
+        {this.props.auth.getManagementToken()}
         <UserInfo {...this.props} />
         <Options {...this.props} />
       </div>

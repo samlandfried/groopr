@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js';
 import history from '../history';
 import { AUTH_CONFIG } from './auth0-variables';
+const request = require("request");
 
 export default class Auth {
   auth0 = new auth0.WebAuth({
@@ -59,5 +60,23 @@ export default class Auth {
     // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  getManagementToken() {
+    const options = {
+      method: 'POST',
+      url: 'https://samlandfried.auth0.com/oauth/token',
+      headers: { 'content-type': 'application/json' },
+      body: `{"client_id":"${AUTH_CONFIG.managementId}","client_secret":"${AUTH_CONFIG.managementSecret}","audience":"https://samlandfried.auth0.com/api/v2/","grant_type":"client_credentials"}`
+    };
+
+    request(options, function(error, response, body) {
+      if (error) throw new Error(error);
+
+      const parsed = JSON.parse(body);
+      localStorage.setItem('managementToken', parsed.access_token);
+      // get user profile
+      // extract Slack token
+    });
   }
 }
