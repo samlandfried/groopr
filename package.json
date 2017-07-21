@@ -5,6 +5,7 @@
   "dependencies": {
     "auth0-js": "^8.8.0",
     "history": "^4.6.3",
+    "jwt-decode": "^2.2.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",
@@ -23,6 +24,7 @@
   "homepage": "https://samlandfried.github.io/poodr-react",
   "devDependencies": {
     "gh-pages": "^1.0.0",
+    "pryjs": "^1.0.3",
     "selenium-webdriver": "^3.4.0"
   }
 }
