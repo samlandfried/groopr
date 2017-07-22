@@ -1,7 +1,6 @@
 import auth0 from 'auth0-js';
 import history from '../history';
 import { AUTH_CONFIG } from './auth0-variables';
-const request = require('request')
 
 export default class Auth {
     auth0 = new auth0.WebAuth({
@@ -61,41 +60,5 @@ export default class Auth {
         // access token's expiry time
         let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         return new Date().getTime() < expiresAt;
-    }
-
-    getManagementToken() {
-        const options = {
-            method: 'POST',
-            url: 'https://samlandfried.auth0.com/oauth/token',
-            headers: { 'content-type': 'application/json' },
-            body: `{"client_id":"${AUTH_CONFIG.managementId}","client_secret":"${AUTH_CONFIG.managementSecret}","audience":"https://samlandfried.auth0.com/api/v2/","grant_type":"client_credentials"}`
-        };
-
-        // Get user ID string from localStorage.access_token JWT
-        request(options, function(error, response, body) {
-            if (error) throw new Error(error);
-
-            const parsed = JSON.parse(body);
-            localStorage.setItem('managementToken', parsed.access_token);
-
-            const parser = require('jwt-decode');
-            const u_id = parser(localStorage.id_token)['sub'];
-
-            const options = {
-                method: 'GET',
-                url: 'https://samlandfried.auth0.com/api/v2/users/' + u_id,
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + parsed.access_token
-                },
-            };
-            // get user profile by parsing the localStorage.id_token JWT
-            // extract Slack token
-            request(options, (error, response, body) => {
-                const payload = JSON.parse(body);
-                const token = payload.identities[0].access_token
-                localStorage.setItem('slackId', token)
-            });
-        });
     }
 }

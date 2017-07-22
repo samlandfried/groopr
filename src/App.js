@@ -60,7 +60,7 @@ class App extends Component {
           </Navbar.Header>
         </Navbar>
         { isAuthenticated() && (
-            <Poodr {...this.props} />
+            <Poodr />
           )
         }
       </div>

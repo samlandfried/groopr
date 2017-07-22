@@ -5,7 +5,7 @@ export default class UserInfo extends Component {
     return (
       <div id="logged-in-user">
         <p>
-          access_token: {localStorage.access_token} <br />
+          access_token:  {this.props.user.keys} <br />
           id_token: {localStorage.id_token} <br />
           expires_at: {localStorage.expires_at} <br />
         </p>
