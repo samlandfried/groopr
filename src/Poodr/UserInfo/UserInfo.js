@@ -4,11 +4,8 @@ export default class UserInfo extends Component {
   render() {
     return (
       <div id="logged-in-user">
-        <p>
-          access_token:  {this.props.user.keys} <br />
-          id_token: {localStorage.id_token} <br />
-          expires_at: {localStorage.expires_at} <br />
-        </p>
+        <img src={this.props.user.image_512} />
+        <h2> Welcome, {this.props.user.name}! </h2>
       </div>
     );
   }

@@ -66,7 +66,7 @@ test.describe('Options select form', function() {
         });
     });
 
-    test.xit('Can load all Slack channels and groups a user has access to', () => {
+    test.it('Can load all Slack channels and groups a user has access to', () => {
       driver.findElements(By.css('#channels tr'))
         .then(channels => {
           assert.isAbove(channels.length, 200);

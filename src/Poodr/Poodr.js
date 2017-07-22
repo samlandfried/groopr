@@ -25,33 +25,54 @@ export default class Poodr extends Component {
     };
 
     fetch("https://samlandfried.auth0.com/oauth/token", options)
-      .then(function(resp) { return resp.text() }.bind(this))
-      .then(function(data) {
-        const parser = require("jwt-decode");
-        const u_id = parser(localStorage.id_token)["sub"];
-        const parsed = JSON.parse(data);
+      .then(
+        function(resp) {
+          return resp.text();
+        }.bind(this)
+      )
+      .then(
+        function(data) {
+          const parser = require("jwt-decode");
+          const u_id = parser(localStorage.id_token)["sub"];
+          const parsed = JSON.parse(data);
 
-        const options = {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: "Bearer " + parsed.access_token
-          }
-        };
-        // get user profile by parsing the localStorage.id_token JWT
-        return fetch(
-          "https://samlandfried.auth0.com/api/v2/users/" + u_id,
-          options
-        );
-      }.bind(this))
-      .then(function(resp) { return resp.json() }.bind(this))
-      .then(function(data) { this.setState({ user: data }); }.bind(this));
+          const options = {
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              Authorization: "Bearer " + parsed.access_token
+            }
+          };
+          // get user profile by parsing the localStorage.id_token JWT
+          return fetch(
+            "https://samlandfried.auth0.com/api/v2/users/" + u_id,
+            options
+          );
+        }.bind(this)
+      )
+      .then(
+        function(resp) {
+          return resp.json();
+        }.bind(this)
+      )
+      .then(
+        function(data) {
+          this.setState({ user: data });
+        }.bind(this)
+      );
   }
 
   render() {
     return (
       <div id="user-is-logged-in">
-        <UserInfo user={this.state.user} /> <Options {...this.props} />  {" "}
+        {
+          Object.keys(this.state.user).length > 0 && (
+            <div id="user-info-loaded">
+              <UserInfo user={this.state.user} />
+              <Options token={this.state.user.identities[0].access_token} />
+            </div>
+          )
+        }
       </div>
     );
   }
