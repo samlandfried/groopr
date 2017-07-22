@@ -25,8 +25,8 @@ export default class Poodr extends Component {
     };
 
     fetch("https://samlandfried.auth0.com/oauth/token", options)
-      .then(resp => resp.text())
-      .then(data => {
+      .then(function(resp) { return resp.text() }.bind(this))
+      .then(function(data) {
         const parser = require("jwt-decode");
         const u_id = parser(localStorage.id_token)["sub"];
         const parsed = JSON.parse(data);
@@ -43,12 +43,9 @@ export default class Poodr extends Component {
           "https://samlandfried.auth0.com/api/v2/users/" + u_id,
           options
         );
-      })
-      .then(resp => resp.json())
-      .then(data => {
-        debugger
-        this.setState({ user: data });
-      });
+      }.bind(this))
+      .then(function(resp) { return resp.json() }.bind(this))
+      .then(function(data) { this.setState({ user: data }); }.bind(this));
   }
 
   render() {
