@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Options from "./Options/Options";
 import UserInfo from "./UserInfo/UserInfo";
+import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 import { AUTH_CONFIG } from "../Auth/auth0-variables";
 
@@ -9,7 +10,8 @@ export default class Poodr extends Component {
     super();
     this.state = {
       user: {},
-      groups: []
+      groups: [],
+      channelName: null
     };
   }
 
@@ -64,7 +66,7 @@ export default class Poodr extends Component {
       );
   }
 
-  makeGroups() {
+  makeGroups(channel_id) {
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
       .value;
@@ -73,6 +75,25 @@ export default class Poodr extends Component {
       'input[name="odd-member-strategy"]:checked'
     ).value;
 
+    const token = this.state.user.identities[0].access_token;
+    const url = 'https://slack.com/api/channels.info?token=' + token + '&channel=' + channel_id
+    fetch(url)
+    .then(resp => resp.json())
+    .then(data => {
+      const members = data.channel.members;
+      this.setState({channelName: data.channel.name})
+      const grooprUrl = 'https://groopr.herokuapp.com/api/v1/groups'
+      const options = {
+        method: 'POST',
+        headers: { "content-type": "application/json" },
+        body: data.channel.members
+      }
+      return fetch(grooprUrl, options)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      data
+    });
     this.setState({ groups: [groupingStrategy, groupSize, oddMemberStrategy] });
   }
 
@@ -87,8 +108,11 @@ export default class Poodr extends Component {
                 token={this.state.user.identities[0].access_token}
                 makeGroups={this.makeGroups.bind(this)}
               />}
-              {this.state.groups.length > 0 &&
-              <Notify />}
+            {this.state.groups.length > 0 &&
+              <div class="groups">
+                <Notify user={this.state.user.name} channel={this.channelName} />
+                <Groups groups={this.state.groups} />
+              </div>}
           </div>}
       </div>
     );

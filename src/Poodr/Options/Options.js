@@ -83,7 +83,7 @@ export default class Options extends Component {
             {this.state.channels.map(channel => {
               return (
                 <tr key={channel.id}>
-                  <a onClick={this.props.makeGroups} href="#">
+                  <a onClick={this.props.makeGroups.bind(null, channel.id)} href="#">
                     <td>
                       {channel.name}
                     </td>
@@ -100,13 +100,12 @@ export default class Options extends Component {
             </thead>
             {this.state.usergroups.map(usergroup => {
               return (
-                <tr
-                  key={usergroup.id}
-                  onClick={this.props.makeGroups(this.formVals.bind(this))}
-                >
-                  <td>
-                    {usergroup.name}
-                  </td>
+                <tr key={usergroup.id}>
+                  <a onClick={this.props.makeGroups} href="#">
+                    <td>
+                      {usergroup.name}
+                    </td>
+                  </a>
                 </tr>
               );
             })}
