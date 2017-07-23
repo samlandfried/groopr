@@ -35,7 +35,7 @@ export default class Options extends Component {
   }
 
   formVals() {
-    debugger
+    debugger;
   }
 
   render() {
@@ -74,36 +74,43 @@ export default class Options extends Component {
         <div id="channel-search">
           <h2>Choose a Channel or Group</h2>
           <input type="text" id="channel-search-input" />
-          <table id="channels" />
-          <thead>
-            <tr>
-              <th>Channel Name</th>
-            </tr>
+          <table id="channels">
+            <thead>
+              <tr>
+                <th>Channel Name</th>
+              </tr>
+            </thead>
             {this.state.channels.map(channel => {
               return (
-                <tr key={channel.id} onClick={this.props.makeGroups}>
-                  <td>
-                    {channel.name}
-                  </td>
+                <tr key={channel.id}>
+                  <a onClick={this.props.makeGroups} href="#">
+                    <td>
+                      {channel.name}
+                    </td>
+                  </a>
                 </tr>
               );
             })}
-          </thead>
-          <table id="usergroups" />
-          <thead>
-            <tr>
-              <th>Group Name</th>
-            </tr>
+          </table>
+          <table id="usergroups">
+            <thead>
+              <tr>
+                <th>Group Name</th>
+              </tr>
+            </thead>
             {this.state.usergroups.map(usergroup => {
               return (
-                <tr key={usergroup.id} onClick={this.props.makeGroups(this.formVals.bind(this))}>
+                <tr
+                  key={usergroup.id}
+                  onClick={this.props.makeGroups(this.formVals.bind(this))}
+                >
                   <td>
                     {usergroup.name}
                   </td>
                 </tr>
               );
             })}
-          </thead>
+          </table>
         </div>
       </form>
     );
