@@ -5,7 +5,7 @@ export default class Options extends Component {
     super();
     this.state = {
       channels: [],
-      groups: []
+      usergroups: []
     };
   }
 
@@ -28,10 +28,14 @@ export default class Options extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.setState({
-          groups: data.usergroups
+          usergroups: data.usergroups
         });
       })
       .catch(error => console.error(error));
+  }
+
+  formVals() {
+    debugger
   }
 
   render() {
@@ -62,7 +66,7 @@ export default class Options extends Component {
             name="odd-member-strategy"
             value="bigger"
             checked="checked"
-          />{" "}
+          />
           Bigger groups <br />
           <input type="radio" name="odd-member-strategy" value="smaller" />{" "}
           Smaller groups <br />
@@ -77,7 +81,7 @@ export default class Options extends Component {
             </tr>
             {this.state.channels.map(channel => {
               return (
-                <tr key={channel.id}>
+                <tr key={channel.id} onClick={this.props.makeGroups}>
                   <td>
                     {channel.name}
                   </td>
@@ -85,16 +89,16 @@ export default class Options extends Component {
               );
             })}
           </thead>
-          <table id="groups" />
+          <table id="usergroups" />
           <thead>
             <tr>
               <th>Group Name</th>
             </tr>
-            {this.state.groups.map(group => {
+            {this.state.usergroups.map(usergroup => {
               return (
-                <tr key={group.id}>
+                <tr key={usergroup.id} onClick={this.props.makeGroups(this.formVals.bind(this))}>
                   <td>
-                    {group.name}
+                    {usergroup.name}
                   </td>
                 </tr>
               );

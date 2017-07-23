@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Options from "./Options/Options";
 import UserInfo from "./UserInfo/UserInfo";
+import Notify from "./Notify/Notify";
 import { AUTH_CONFIG } from "../Auth/auth0-variables";
 
 export default class Poodr extends Component {
   constructor() {
     super();
     this.state = {
-      user: {}
+      user: {},
+      groups: []
     };
   }
 
@@ -62,17 +64,32 @@ export default class Poodr extends Component {
       );
   }
 
+  makeGroups() {
+    const form = document.querySelector("#grouping-options");
+    const groupingStrategy = form.querySelector("#grouping-strategy-select")
+      .value;
+    const groupSize = form.querySelector("#group-size-select").value;
+    const oddMemberStrategy = document.querySelector(
+      'input[name="odd-member-strategy"]:checked'
+    ).value;
+
+    this.setState({ groups: [groupingStrategy, groupSize, oddMemberStrategy] });
+  }
+
   render() {
     return (
       <div id="user-is-logged-in">
-        {
-          Object.keys(this.state.user).length > 0 && (
-            <div id="user-info-loaded">
-              <UserInfo user={this.state.user} />
-              <Options token={this.state.user.identities[0].access_token} />
-            </div>
-          )
-        }
+        {Object.keys(this.state.user).length > 0 &&
+          <div id="user-info-loaded">
+            <UserInfo user={this.state.user} />
+            {this.state.groups.length === 0 &&
+              <Options
+                token={this.state.user.identities[0].access_token}
+                makeGroups={this.makeGroups.bind(this)}
+              />}
+              {this.state.groups.length > 0 &&
+              <Notify />}
+          </div>}
       </div>
     );
   }
