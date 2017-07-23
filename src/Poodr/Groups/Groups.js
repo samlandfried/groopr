@@ -10,8 +10,18 @@ export default class Groups extends Component {
   }
 
   render() {
-    return <p>
-      Groups, son!
-    </p>;
+    return (
+      <ul>
+        {this.props.groups.map(group => {
+          return (
+            <li>
+              <ol>
+                {group.map(member => <li>{member}</li>)}
+              </ol>
+            </li>
+          );
+        })}
+      </ul>
+    );
   }
 }

@@ -4,6 +4,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 import { AUTH_CONFIG } from "../Auth/auth0-variables";
+const $ = require('jquery');
 
 export default class Poodr extends Component {
   constructor() {
@@ -76,44 +77,53 @@ export default class Poodr extends Component {
     ).value;
 
     const token = this.state.user.identities[0].access_token;
-    const url = 'https://slack.com/api/channels.info?token=' + token + '&channel=' + channel_id
-    fetch(url)
-    .then(resp => resp.json())
-    .then(data => {
+    const url =
+      "https://slack.com/api/channels.info?token=" +
+      token +
+      "&channel=" +
+      channel_id;
+    fetch(url).then(resp => resp.json()).then(data => {
       const members = data.channel.members;
-      this.setState({channelName: data.channel.name})
-      const grooprUrl = 'https://groopr.herokuapp.com/api/v1/groups'
+      this.setState({ channelName: data.channel.name });
+      const grooprUrl = "http://localhost:3001/api/v1/groups";
+
       const options = {
-        method: 'POST',
-        headers: { "content-type": "application/json" },
-        body: data.channel.members
-      }
-      return fetch(grooprUrl, options)
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      data
+        method: "POST",
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify({ collection: members })
+      };
+
+      fetch(grooprUrl, options)
+        .then(resp => resp.json())
+        .then(data => {
+          this.setState({
+            groups: data.groups
+          });
+        })
+        .catch(error => console.error(error));
     });
-    this.setState({ groups: [groupingStrategy, groupSize, oddMemberStrategy] });
   }
 
   render() {
     return (
       <div id="user-is-logged-in">
-        {Object.keys(this.state.user).length > 0 &&
+        {" "}{Object.keys(this.state.user).length > 0 &&
           <div id="user-info-loaded">
-            <UserInfo user={this.state.user} />
+            <UserInfo user={this.state.user} />{" "}
             {this.state.groups.length === 0 &&
               <Options
                 token={this.state.user.identities[0].access_token}
                 makeGroups={this.makeGroups.bind(this)}
-              />}
+              />}{" "}
             {this.state.groups.length > 0 &&
-              <div class="groups">
-                <Notify user={this.state.user.name} channel={this.channelName} />
-                <Groups groups={this.state.groups} />
-              </div>}
-          </div>}
+              <div className="groups">
+                <Notify
+                  user={this.state.user.name}
+                  channel={this.channelName}
+                />{" "}
+                <Groups groups={this.state.groups} />{" "}
+              </div>}{" "}
+          </div>}{" "}
       </div>
     );
   }
