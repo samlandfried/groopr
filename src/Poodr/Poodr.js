@@ -4,7 +4,7 @@ import UserInfo from "./UserInfo/UserInfo";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 import { AUTH_CONFIG } from "../Auth/auth0-variables";
-const $ = require('jquery');
+const $ = require("jquery");
 
 export default class Poodr extends Component {
   constructor() {
@@ -17,16 +17,16 @@ export default class Poodr extends Component {
   }
 
   componentDidMount() {
-    const body = JSON.stringify({
+    const body = {
       client_id: AUTH_CONFIG.managementId,
       client_secret: AUTH_CONFIG.managementSecret,
       audience: "https://samlandfried.auth0.com/api/v2/",
       grant_type: "client_credentials"
-    });
+    };
     const options = {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: body
+      body: JSON.stringify(body)
     };
 
     fetch("https://samlandfried.auth0.com/oauth/token", options)
@@ -37,6 +37,7 @@ export default class Poodr extends Component {
       )
       .then(
         function(data) {
+          debugger
           const parser = require("jwt-decode");
           const u_id = parser(localStorage.id_token)["sub"];
           const parsed = JSON.parse(data);
@@ -79,7 +80,7 @@ export default class Poodr extends Component {
       size: groupSize,
       oddMemberStrategy: oddMemberStrategy,
       groupingStrategy: groupingStrategy
-    }
+    };
 
     const token = this.state.user.identities[0].access_token;
     const url =
@@ -87,26 +88,38 @@ export default class Poodr extends Component {
       token +
       "&channel=" +
       channel_id;
-    fetch(url).then(function(resp) {return resp.json()}.bind(this)).then(function(data) {
-      const members = data.channel.members;
-      this.setState({ channelName: data.channel.name });
-      const grooprUrl = "http://localhost:3001/api/v1/groups";
+    fetch(url)
+      .then(
+        function(resp) {
+          return resp.json();
+        }.bind(this)
+      )
+      .then(
+        function(data) {
+          const members = data.channel.members;
+          this.setState({ channelName: data.channel.name });
+          const grooprUrl = "http://localhost:3001/api/v1/groups";
 
-      const body = {
-        method: "POST",
-        headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify({ collection: members, options: options })
-      };
+          const body = {
+            method: "POST",
+            headers: new Headers({ "Content-Type": "application/json" }),
+            body: JSON.stringify({ collection: members, options: options })
+          };
 
-      fetch(grooprUrl, body)
-        .then(function(resp) {return resp.json()}.bind(this))
-        .then(data => {
-          this.setState({
-            groups: data.groups
-          });
-        })
-        .catch(error => console.error(error));
-    }.bind(this));
+          fetch(grooprUrl, body)
+            .then(
+              function(resp) {
+                return resp.json();
+              }.bind(this)
+            )
+            .then(data => {
+              this.setState({
+                groups: data.groups
+              });
+            })
+            .catch(error => console.error(error));
+        }.bind(this)
+      );
   }
 
   render() {
