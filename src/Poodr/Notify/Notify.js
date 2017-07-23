@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 
 export default class Notify extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   render() {
     return <p>
-      Assigned by: {this.props.user}
+      Assigned by: {this.props.user} <br/>
+      Channel name: {this.props.channel}
     </p>;
   }
 }

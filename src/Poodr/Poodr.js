@@ -87,7 +87,7 @@ export default class Poodr extends Component {
       token +
       "&channel=" +
       channel_id;
-    fetch(url).then(resp => resp.json()).then(data => {
+    fetch(url).then(function(resp) {return resp.json()}.bind(this)).then(function(data) {
       const members = data.channel.members;
       this.setState({ channelName: data.channel.name });
       const grooprUrl = "http://localhost:3001/api/v1/groups";
@@ -99,14 +99,14 @@ export default class Poodr extends Component {
       };
 
       fetch(grooprUrl, body)
-        .then(resp => resp.json())
+        .then(function(resp) {return resp.json()}.bind(this))
         .then(data => {
           this.setState({
             groups: data.groups
           });
         })
         .catch(error => console.error(error));
-    });
+    }.bind(this));
   }
 
   render() {
@@ -124,7 +124,7 @@ export default class Poodr extends Component {
               <div className="groups">
                 <Notify
                   user={this.state.user.name}
-                  channel={this.channelName}
+                  channel={this.state.channelName}
                 />{" "}
                 <Groups groups={this.state.groups} />{" "}
               </div>}{" "}
