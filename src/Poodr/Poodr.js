@@ -75,6 +75,11 @@ export default class Poodr extends Component {
     const oddMemberStrategy = document.querySelector(
       'input[name="odd-member-strategy"]:checked'
     ).value;
+    const options = {
+      size: groupSize,
+      oddMemberStrategy: oddMemberStrategy,
+      groupingStrategy: groupingStrategy
+    }
 
     const token = this.state.user.identities[0].access_token;
     const url =
@@ -87,13 +92,13 @@ export default class Poodr extends Component {
       this.setState({ channelName: data.channel.name });
       const grooprUrl = "http://localhost:3001/api/v1/groups";
 
-      const options = {
+      const body = {
         method: "POST",
         headers: new Headers({'Content-Type': 'application/json'}),
-        body: JSON.stringify({ collection: members })
+        body: JSON.stringify({ collection: members, options: options })
       };
 
-      fetch(grooprUrl, options)
+      fetch(grooprUrl, body)
         .then(resp => resp.json())
         .then(data => {
           this.setState({
