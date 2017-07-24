@@ -80,7 +80,7 @@ export default class Options extends Component {
                 <th>Channel Name</th>
               </tr>
             </thead>
-            {this.state.channels.map(channel => {
+            {this.state.channels && this.state.channels.map(channel => {
               return (
                 <tr key={channel.id}>
                   <a onClick={this.props.makeGroups.bind(null, channel.id)} href="#">
@@ -98,7 +98,7 @@ export default class Options extends Component {
                 <th>Group Name</th>
               </tr>
             </thead>
-            {this.state.usergroups.map(usergroup => {
+            {this.state.usergroups && this.state.usergroups.map(usergroup => {
               return (
                 <tr key={usergroup.id}>
                   <a onClick={this.props.makeGroups} href="#">

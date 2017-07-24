@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Options from "./Options/Options";
-import UserInfo from "./UserInfo/UserInfo";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 
@@ -15,6 +14,7 @@ export default class Poodr extends Component {
   }
 
   makeGroups(channel_id) {
+    debugger;
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
       .value;
@@ -28,7 +28,7 @@ export default class Poodr extends Component {
       groupingStrategy: groupingStrategy
     };
 
-    const token = this.state.user.identities[0].access_token;
+    const token = this.props.bot.bot_access_token;
     const url =
       "https://slack.com/api/channels.info?token=" +
       token +
@@ -69,39 +69,57 @@ export default class Poodr extends Component {
   }
 
   messagePeeps() {
-    const message = document.querySelector('form textarea').value;
-    const skipHistory = document.querySelector('form input[type="checkbox"]').checked;
+    const message = document.querySelector("form textarea").value;
+    const skipHistory = document.querySelector('form input[type="checkbox"]')
+      .checked;
     const token = this.state.user.identities[0].access_token;
     const groups = this.state.groups;
-    debugger
+    debugger;
   }
-
 
   render() {
     return (
-      // Options
-      // Notify
-      // Groups
-      <div id="user-is-logged-in">
-        {" "}{Object.keys(this.state.user).length > 0 &&
-          <div id="user-info-loaded">
-            <UserInfo user={this.state.user} />{" "}
-            {this.state.groups.length === 0 &&
-              <Options
-                token={this.state.user.identities[0].access_token}
-                makeGroups={this.makeGroups.bind(this)}
-              />}{" "}
-            {this.state.groups.length > 0 &&
-              <div className="groups">
-                <Notify
-                  user={this.state.user.name}
-                  channel={this.state.channelName}
-                  messagePeeps={this.messagePeeps.bind(this)}
-                />{" "}
-                <Groups groups={this.state.groups} />{" "}
-              </div>}{" "}
+      <div id={"poodr"}>
+        {this.state.groups.length === 0 &&
+          <div id={"options"}>
+            <Options
+              token={this.props.bot.bot_access_token}
+              makeGroups={this.makeGroups.bind(this)}
+            />
+          </div>}
+        {this.state.groups.length > 0 &&
+          <div id="groups">
+            <Notify
+              // user={this.state.user.name}
+              channel={this.state.channelName}
+              messagePeeps={this.messagePeeps.bind(this)}
+            />{" "}
+            <Groups groups={this.state.groups} />{" "}
           </div>}{" "}
+        }
       </div>
     );
   }
 }
+// Notify
+// Groups
+// <div id="user-is-logged-in">
+//   {" "}{Object.keys(this.state.user).length > 0 &&
+//     <div id="user-info-loaded">
+//       <UserInfo user={this.state.user} />{" "}
+//       {this.state.groups.length === 0 &&
+//         <Options
+//           token={this.state.user.identities[0].access_token}
+//           makeGroups={this.makeGroups.bind(this)}
+//         />}{" "}
+//       {this.state.groups.length > 0 &&
+//         <div className="groups">
+//           <Notify
+//             user={this.state.user.name}
+//             channel={this.state.channelName}
+//             messagePeeps={this.messagePeeps.bind(this)}
+//           />{" "}
+//           <Groups groups={this.state.groups} />{" "}
+//         </div>}{" "}
+//     </div>}{" "}
+// </div>
