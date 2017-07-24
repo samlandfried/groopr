@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { AUTH_CONFIG } from "../Auth/auth0-variables";
 
 export default class AddToSlack extends Component {
   render() {

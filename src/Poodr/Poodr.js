@@ -78,6 +78,7 @@ export default class Poodr extends Component {
 
 
   render() {
+    debugger
     return (
       <div id="user-is-logged-in">
         {" "}{Object.keys(this.state.user).length > 0 &&

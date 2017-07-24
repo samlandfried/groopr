@@ -1,14 +1,13 @@
 import React, { Component } from "react";
+import history from "./../history";
 import loading from "./loading.svg";
-import { AUTH } from './../tokens';
+import { AUTH } from "./../tokens";
 
 export default class Callback extends Component {
   componentDidMount() {
-    const code = getCode(this.props.location.search);
-    const url =  `https://slack.com/api/oauth.access?client_id=${AUTH.clientId}&client_secret=${AUTH.clientSecret}&code=${code}&pretty=1`
-    fetch(url)
-    .then(resp => resp.json())
-    .then(data => { debugger } )
+    const params = this.props.location.search;
+    localStorage.setItem('code', getCode(params));
+    history.replace('/')
   }
 
   render(props) {

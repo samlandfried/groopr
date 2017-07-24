@@ -13,9 +13,6 @@ export const makeMainRoutes = () => {
         <div>
           <Route path="/" render={(props) => <App  {...props} />} />
           <Route path="/callback" render={(props) => <Callback {...props} /> }/>
-          {/* Don't publish this route */}
-          <Route path="/test" render={ props => <Callback {...props} />} />
-          <Route path="/test/options" render={ props => <Options {...props} />} />
         </div>
       </BrowserRouter>
   );
