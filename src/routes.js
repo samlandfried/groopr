@@ -5,28 +5,16 @@ import Poodr from './Poodr/Poodr'
 import Options from './Poodr/Options/Options'
 // import Home from './Home/Home';
 import Callback from './Callback/Callback';
-import Auth from './Auth/Auth';
 import history from './history';
-
-const auth = new Auth();
-
-const handleAuthentication = (nextState, replace) => {
-  if (/access_token|id_token|error/.test(nextState.location.hash)) {
-    auth.handleAuthentication();
-  }
-}
 
 export const makeMainRoutes = () => {
   return (
       <BrowserRouter history={history} component={App}>
         <div>
-          <Route path="/" render={(props) => <App auth={auth} {...props} />} />
-          <Route path="/callback" render={(props) => {
-            handleAuthentication(props);
-            return <Callback {...props} />
-          }}/>
+          <Route path="/" render={(props) => <App  {...props} />} />
+          <Route path="/callback" render={(props) => <Callback {...props} /> }/>
           {/* Don't publish this route */}
-          <Route path="/test" render={ props => <Poodr {...props} />} />
+          <Route path="/test" render={ props => <Callback {...props} />} />
           <Route path="/test/options" render={ props => <Options {...props} />} />
         </div>
       </BrowserRouter>
