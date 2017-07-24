@@ -121,6 +121,15 @@ export default class Poodr extends Component {
       );
   }
 
+  messagePeeps() {
+    const message = document.querySelector('form textarea').value;
+    const skipHistory = document.querySelector('form input[type="checkbox"]').checked;
+    const token = this.state.user.identities[0].access_token;
+    const groups = this.state.groups;
+    debugger
+  }
+
+
   render() {
     return (
       <div id="user-is-logged-in">
@@ -137,6 +146,7 @@ export default class Poodr extends Component {
                 <Notify
                   user={this.state.user.name}
                   channel={this.state.channelName}
+                  messagePeeps={this.messagePeeps.bind(this)}
                 />{" "}
                 <Groups groups={this.state.groups} />{" "}
               </div>}{" "}

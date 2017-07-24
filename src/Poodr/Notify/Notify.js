@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 
 export default class Notify extends Component {
-  messagePeeps() {
-    const message = document.querySelector('form textarea').value;
-    const skipHistory = document.querySelector('form input[type="checkbox"]').checked;
-    debugger
-  }
-
   render() {
     const defaultMessage = `You have been assigned to this group from ${this.props .channel} by ${this.props.user}`;
     return (
@@ -18,7 +12,7 @@ export default class Notify extends Component {
           <input type="checkbox" id="skip-history" value="skipHistory" />
           <label>Don't record these groups.</label>
         </div>
-        <input type="submit" value="Notify Groups" onClick={this.messagePeeps}/>
+        <input type="submit" value="Notify Groups" onClick={this.props.messagePeeps}/>
       </form>
     );
   }
