@@ -37,7 +37,6 @@ export default class Poodr extends Component {
       )
       .then(
         function(data) {
-          debugger
           const parser = require("jwt-decode");
           const u_id = parser(localStorage.id_token)["sub"];
           const parsed = JSON.parse(data);
@@ -98,7 +97,7 @@ export default class Poodr extends Component {
         function(data) {
           const members = data.channel.members;
           this.setState({ channelName: data.channel.name });
-          const grooprUrl = "http://localhost:3001/api/v1/groups";
+          const grooprUrl = "http://groopr.herokuapp.com/api/v1/groups";
 
           const body = {
             method: "POST",
