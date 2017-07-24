@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, Button } from "react-bootstrap";
 import Poodr from "./Poodr/Poodr";
+import UserInfo from './UserInfo/UserInfo'
 import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
 import { AUTH } from "./tokens";
@@ -46,6 +47,7 @@ class App extends Component {
               <p />
             </Navbar.Brand>
             {!this.state.authed && <AddToSlack />}
+            {this.state.authed && <UserInfo user={this.state.user}/>}
           </Navbar.Header>
         </Navbar>
         {this.state.authed && <Poodr user={this.state.user} bot={this.state.bot} />}
