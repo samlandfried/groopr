@@ -3,10 +3,7 @@ import React, { Component } from "react";
 export default class Options extends Component {
   constructor() {
     super();
-    this.state = {
-      channels: [],
-      usergroups: []
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -83,7 +80,7 @@ export default class Options extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.channels && /* Added for dev */ this.state.channels[0] &&
+              {this.state.channels && /* Added for dev */
                 this.props.makeGroups(this.state.channels[0].id)
                 /* this.state.channels.map(channel => {
                   return (

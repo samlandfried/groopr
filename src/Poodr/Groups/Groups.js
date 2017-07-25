@@ -1,19 +1,19 @@
 import React, { Component } from "react";
+import Member from "./Member/Member";
 
 export default class Groups extends Component {
   render() {
     return (
-      <ul>
+      <div className="groups">
         {this.props.groups.map(group => {
+          let g_id = 1;
           return (
-            <li>
-              <ol>
-                {group.map(member => <li>{member}</li>)}
-              </ol>
-            </li>
+            <div className="group" id={g_id}>
+              {group.map(member => <Member user={member} />)}
+            </div>
           );
         })}
-      </ul>
+      </div>
     );
   }
 }
