@@ -98,7 +98,7 @@ export default class Poodr extends Component {
     return (
       <div id={"poodr"}>
         {this.state.groups.length === 0 &&
-          <div id={"options"}>
+          <div className={"options"}>
             <Options
               token={this.props.bot.bot_access_token}
               makeGroups={this.makeGroups.bind(this)}
@@ -113,7 +113,6 @@ export default class Poodr extends Component {
             />{" "}
             <Groups groups={this.state.groups} />{" "}
           </div>}{" "}
-        }
       </div>
     );
   }
