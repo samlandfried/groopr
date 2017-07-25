@@ -15,6 +15,33 @@ body {
   display: flex;
 }
 
+.user-info {
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 3px 15px;
+  background-color: mediumslateblue;
+}
+
+.user-info h4 {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  color: azure;
+}
+
+.user-info img {
+  width: 36px;
+  height: 36px;
+  margin-left: 15px;
+  border-radius: 60px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 0px;
+}
+
 .button {
   background-color: hotpink;
   border-style: solid;

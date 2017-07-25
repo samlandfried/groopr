@@ -3,11 +3,11 @@ import React, { Component } from "react";
 export default class UserInfo extends Component {
   render() {
     return (
-      <div id="logged-in-user">
+      <div className="user-info">
         <h4>
           Welcome, {this.props.user.name}!
-          <img src={this.props.user.image} />
         </h4>
+        <img src={this.props.user.image} />
       </div>
     );
   }
