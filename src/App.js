@@ -22,17 +22,21 @@ class App extends Component {
   render() {
     return (
       <div id="App">
-        <div class="navbar">
-          <div class="header">
-            <div class="brand" id="navbar-brand">
-              <a href="https://github.com/samlandfried/poodr-react">Poodr on GitHub</a>
-            </div>
-            {!this.state.authed && <AddToSlack />}
-            {this.state.authed && this.state.user && <UserInfo user={this.state.user} />}
+        <section className="navbar">
+          <div className="brand button" id="navbar-brand">
+            <a href="https://github.com/samlandfried/poodr-react">
+              Poodr on GitHub
+            </a>
           </div>
-        </div>
-        {this.state.authed &&
-          <Poodr user={this.state.user} bot={this.state.bot} />}
+          {!this.state.authed && <AddToSlack />}
+          {this.state.authed &&
+            this.state.user &&
+            <UserInfo user={this.state.user} />}
+        </section>
+        <section className="main">
+          {this.state.authed &&
+            <Poodr user={this.state.user} bot={this.state.bot} />}
+        </section>
       </div>
     );
   }
