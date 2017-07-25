@@ -112,7 +112,7 @@ export default class Poodr extends Component {
               channel={this.state.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
             />{" "}
-            <Groups groups={this.state.groups} />{" "}
+            <Groups token={this.props.bot.bot_access_token} groups={this.state.groups} />{" "}
           </div>}{" "}
       </div>
     );
