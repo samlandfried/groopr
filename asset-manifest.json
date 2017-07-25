@@ -1,7 +1,12 @@
 {
-  "main.css": "static/css/main.cacbacc7.css",
-  "main.css.map": "static/css/main.cacbacc7.css.map",
-  "main.js": "static/js/main.18dc1c64.js",
-  "main.js.map": "static/js/main.18dc1c64.js.map",
-  "static/media/logo.svg": "static/media/logo.5d5d9eef.svg"
+  "main.css": "static/css/main.0b2a1f36.css",
+  "main.css.map": "static/css/main.0b2a1f36.css.map",
+  "main.js": "static/js/main.4e5e9c58.js",
+  "main.js.map": "static/js/main.4e5e9c58.js.map",
+  "static/media/glyphicons-halflings-regular.eot": "static/media/glyphicons-halflings-regular.f4769f9b.eot",
+  "static/media/glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.89889688.svg",
+  "static/media/glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
+  "static/media/glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
+  "static/media/glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2",
+  "static/media/loading.svg": "static/media/loading.c5590569.svg"
 }
