@@ -85,7 +85,7 @@ export default class Poodr extends Component {
         const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
         fetch(dmUrl).then(resp => resp.json()).then(data => {
           if (data.ok) {
-            history.replace('/')
+            this.setState({groups: []});
           } else {
             console.error(data);
           }
