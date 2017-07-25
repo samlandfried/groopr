@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Options from "./Options/Options";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
+import history from "./../history";
 
 export default class Poodr extends Component {
   constructor() {
@@ -14,7 +15,6 @@ export default class Poodr extends Component {
   }
 
   makeGroups(channel_id) {
-    debugger;
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
       .value;
@@ -68,13 +68,30 @@ export default class Poodr extends Component {
       );
   }
 
-  messagePeeps() {
+  messagePeeps(e) {
+    e.preventDefault();
     const message = document.querySelector("form textarea").value;
     const skipHistory = document.querySelector('form input[type="checkbox"]')
       .checked;
-    const token = this.state.user.identities[0].access_token;
+    const token = this.props.bot.bot_access_token;
     const groups = this.state.groups;
-    debugger;
+
+    const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
+    console.log(groups);
+    groups.forEach(group => {
+      const users = group.join(",");
+      fetch(url + users).then(resp => resp.json()).then(data => {
+        const g_id = data.group.id;
+        const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
+        fetch(dmUrl).then(resp => resp.json()).then(data => {
+          if (data.ok) {
+            history.replace('/')
+          } else {
+            console.error(data);
+          }
+        });
+      });
+    });
   }
 
   render() {
@@ -90,7 +107,7 @@ export default class Poodr extends Component {
         {this.state.groups.length > 0 &&
           <div id="groups">
             <Notify
-              // user={this.state.user.name}
+              user={this.props.user.name}
               channel={this.state.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
             />{" "}
