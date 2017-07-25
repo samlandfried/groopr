@@ -105,7 +105,7 @@ export default class Poodr extends Component {
             />
           </div>}
         {this.state.groups.length > 0 &&
-          <div id="groups">
+          <div className="notify-and-groups">
             <Notify
               user={this.props.user.name}
               channel={this.state.channelName}

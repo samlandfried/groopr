@@ -16,6 +16,10 @@ body {
   justify-content: center;
 }
 
+.notify-and-groups {
+  display: flex;
+}
+
 .user-info {
   display: flex;
   align-items: center;
@@ -56,9 +60,17 @@ body {
   font-size: 22px;
 }
 
+.options h3 {
+  font-size: 16px;
+}
+
 .options select, input {
   border-style: none;
   width: 100%;
+}
+
+#channel-search-input {
+  margin-bottom: 12px;
 }
 
 input[type="radio"], input[type="checkbox"] {
