@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Navbar, Button } from "react-bootstrap";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
@@ -23,16 +22,15 @@ class App extends Component {
   render() {
     return (
       <div id="App">
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand id="navbar-brand">
-              <a href="#">Poodr</a>
-              <p />
-            </Navbar.Brand>
+        <div class="navbar">
+          <div class="header">
+            <div class="brand" id="navbar-brand">
+              <a href="https://github.com/samlandfried/poodr-react">Poodr on GitHub</a>
+            </div>
             {!this.state.authed && <AddToSlack />}
             {this.state.authed && this.state.user && <UserInfo user={this.state.user} />}
-          </Navbar.Header>
-        </Navbar>
+          </div>
+        </div>
         {this.state.authed &&
           <Poodr user={this.state.user} bot={this.state.bot} />}
       </div>

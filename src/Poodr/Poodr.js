@@ -118,25 +118,3 @@ export default class Poodr extends Component {
     );
   }
 }
-// Notify
-// Groups
-// <div id="user-is-logged-in">
-//   {" "}{Object.keys(this.state.user).length > 0 &&
-//     <div id="user-info-loaded">
-//       <UserInfo user={this.state.user} />{" "}
-//       {this.state.groups.length === 0 &&
-//         <Options
-//           token={this.state.user.identities[0].access_token}
-//           makeGroups={this.makeGroups.bind(this)}
-//         />}{" "}
-//       {this.state.groups.length > 0 &&
-//         <div className="groups">
-//           <Notify
-//             user={this.state.user.name}
-//             channel={this.state.channelName}
-//             messagePeeps={this.messagePeeps.bind(this)}
-//           />{" "}
-//           <Groups groups={this.state.groups} />{" "}
-//         </div>}{" "}
-//     </div>}{" "}
-// </div>
