@@ -61,16 +61,16 @@ export default class Options extends Component {
           <input
             type="radio"
             name="odd-member-strategy"
-            value="bigger"
+            value="large"
             defaultChecked
           />
           Bigger groups <br />
-          <input type="radio" name="odd-member-strategy" value="smaller" />
+          <input type="radio" name="odd-member-strategy" value="small" />
           Smaller groups <br />
         </div>
         <div id="channel-search">
           <h2>Choose a Channel or Group</h2>
-          <input type="text" id="channel-search-input" />
+          <input type="text" id="channel-search-input" onChange={this.filterChannels}/>
         </div>
         <div className="channels-and-groups">
           <table id="channels">
@@ -80,9 +80,10 @@ export default class Options extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.channels && this.state.channels.map(channel => {
+              {this.state.channels &&
+                this.state.channels.map(channel => {
                   return (
-                    <tr key={channel.id}>
+                    <tr className="channel" key={channel.id}>
                       <td>
                         <a
                           onClick={this.props.makeGroups.bind(null, channel.id)}
@@ -106,7 +107,7 @@ export default class Options extends Component {
               {this.state.usergroups &&
                 this.state.usergroups.map(usergroup => {
                   return (
-                    <tr key={usergroup.id}>
+                    <tr className="usergroup" key={usergroup.id}>
                       <td>
                         <a onClick={this.props.makeGroups} href="#">
                           {usergroup.name}
@@ -121,4 +122,18 @@ export default class Options extends Component {
       </form>
     );
   }
-}
+
+  filterChannels(event) {
+    const query = event.target.value;
+    const trs = document.querySelectorAll('tr.channel,tr.usergroup');
+
+    let name;
+    for(let i = 0; i < trs.length; i ++) {
+      trs[i].style.display = '';
+      name = trs[i].firstElementChild.firstElementChild.innerText;
+      if(!name.includes(query)) {
+        trs[i].style.display = 'none';
+      }
+    }
+  }
+};

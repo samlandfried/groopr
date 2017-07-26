@@ -166,3 +166,7 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.warning {
+  background-color: red;
+}

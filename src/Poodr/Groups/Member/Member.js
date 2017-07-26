@@ -35,7 +35,6 @@ export default class Member extends Component {
       .then(resp => resp.json())
       .then(data => {
         const user = data.user.profile;
-        console.log(user);
         this.setState({
           user: {
             name: user.real_name,

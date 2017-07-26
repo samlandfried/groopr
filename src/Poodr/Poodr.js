@@ -14,27 +14,8 @@ export default class Poodr extends Component {
     };
   }
 
-  render() {
-    return (
-      <div id={"poodr"}>
-        {this.state.groups.length === 0 &&
-          <div className={"options"}>
-            <Options
-              token={this.props.bot.bot_access_token}
-              makeGroups={this.makeGroups.bind(this)}
-            />
-          </div>}
-        {this.state.groups.length > 0 &&
-          <div className="notify-and-groups">
-            <Notify
-              user={this.props.user.name}
-              channel={this.state.channelName}
-              messagePeeps={this.messagePeeps.bind(this)}
-            />{" "}
-            <Groups token={this.props.bot.bot_access_token} groups={this.state.groups} />{" "}
-          </div>}{" "}
-      </div>
-    );
+  clearGroups() {
+    this.setState({ groups: [] });
   }
 
   makeGroups(channel_id) {
@@ -91,8 +72,8 @@ export default class Poodr extends Component {
       );
   }
 
-  messagePeeps(e) {
-    e.preventDefault();
+  messagePeeps(event) {
+    event.preventDefault();
     const message = document.querySelector("form textarea").value;
     const skipHistory = document.querySelector('form input[type="checkbox"]')
       .checked;
@@ -108,12 +89,39 @@ export default class Poodr extends Component {
         const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
         fetch(dmUrl).then(resp => resp.json()).then(data => {
           if (data.ok) {
-            this.setState({groups: []});
+            this.clearGroups();
           } else {
             console.error(data);
           }
         });
       });
     });
+  }
+
+  render() {
+    return (
+      <div id={"poodr"}>
+        {this.state.groups.length === 0 &&
+          <div className={"options"}>
+            <Options
+              token={this.props.bot.bot_access_token}
+              makeGroups={this.makeGroups.bind(this)}
+            />
+          </div>}
+        {this.state.groups.length > 0 &&
+          <div className="notify-and-groups">
+            <Notify
+              user={this.props.user.name}
+              channel={this.state.channelName}
+              messagePeeps={this.messagePeeps.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
+            />{" "}
+            <Groups
+              token={this.props.bot.bot_access_token}
+              groups={this.state.groups}
+            />{" "}
+          </div>}{" "}
+      </div>
+    );
   }
 }
