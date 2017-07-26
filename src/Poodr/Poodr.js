@@ -14,6 +14,29 @@ export default class Poodr extends Component {
     };
   }
 
+  render() {
+    return (
+      <div id={"poodr"}>
+        {this.state.groups.length === 0 &&
+          <div className={"options"}>
+            <Options
+              token={this.props.bot.bot_access_token}
+              makeGroups={this.makeGroups.bind(this)}
+            />
+          </div>}
+        {this.state.groups.length > 0 &&
+          <div className="notify-and-groups">
+            <Notify
+              user={this.props.user.name}
+              channel={this.state.channelName}
+              messagePeeps={this.messagePeeps.bind(this)}
+            />{" "}
+            <Groups token={this.props.bot.bot_access_token} groups={this.state.groups} />{" "}
+          </div>}{" "}
+      </div>
+    );
+  }
+
   makeGroups(channel_id) {
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
@@ -92,28 +115,5 @@ export default class Poodr extends Component {
         });
       });
     });
-  }
-
-  render() {
-    return (
-      <div id={"poodr"}>
-        {this.state.groups.length === 0 &&
-          <div className={"options"}>
-            <Options
-              token={this.props.bot.bot_access_token}
-              makeGroups={this.makeGroups.bind(this)}
-            />
-          </div>}
-        {this.state.groups.length > 0 &&
-          <div className="notify-and-groups">
-            <Notify
-              user={this.props.user.name}
-              channel={this.state.channelName}
-              messagePeeps={this.messagePeeps.bind(this)}
-            />{" "}
-            <Groups token={this.props.bot.bot_access_token} groups={this.state.groups} />{" "}
-          </div>}{" "}
-      </div>
-    );
   }
 }
