@@ -95,7 +95,6 @@ export default class Poodr extends Component {
   }
 
   render() {
-    // debugger
     return (
       <div id={"poodr"}>
         {this.state.groups.length === 0 &&

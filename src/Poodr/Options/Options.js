@@ -80,9 +80,7 @@ export default class Options extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.channels && /* Added for dev */
-                this.props.makeGroups(this.state.channels[0].id)
-                /* this.state.channels.map(channel => {
+              {this.state.channels && this.state.channels.map(channel => {
                   return (
                     <tr key={channel.id}>
                       <td>
@@ -94,7 +92,7 @@ export default class Options extends Component {
                         </a>
                       </td>
                     </tr>
-                  );*/
+                  );
                 })}
             </tbody>
           </table>

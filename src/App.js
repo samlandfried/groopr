@@ -9,17 +9,7 @@ import history from "./history";
 class App extends Component {
   constructor() {
     super();
-    // For production: this.state = {};
-
-    const user = {"access_token":"xoxp-146403140194-146403140226-210565279667-0ebfa990a8fc2e0f8ef225af4aeeb733","user_id":"U4ABV446N"}
-    this.fetchUserInfo(user);
-    this.state = {
-      bot: {
-        bot_user_id: "U6CJ3H9MG",
-        bot_access_token: "xoxb-216615587730-g4AgtMvhN3kSps3bq9aVaabf"
-      },
-      authed: true
-    };
+    this.state = {};
   }
 
   componentDidMount() {
