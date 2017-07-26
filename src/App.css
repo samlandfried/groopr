@@ -1,5 +1,7 @@
 body {
   background-color: white;
+  background-image: url('img/gato.png');
+  background-size: cover;
 }
 
 .navbar {
@@ -8,7 +10,7 @@ body {
   flex: 1;
   justify-content: space-around;
   align-items: center;
-  background-color: lawngreen;
+  background-color: royalblue;
   margin: 0;
 }
 
