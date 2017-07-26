@@ -51,7 +51,9 @@ body {
   padding: 0px;
 }
 
-.options, .groups, .group {
+.options,
+.groups,
+.group {
   margin: 15px;
   border-radius: 15px;
   border-width: 1px;
@@ -78,7 +80,8 @@ body {
   font-size: 16px;
 }
 
-.options select, input {
+.options select,
+input {
   border-style: none;
   width: 100%;
 }
@@ -87,7 +90,8 @@ body {
   margin-bottom: 12px;
 }
 
-input[type="radio"], input[type="checkbox"] {
+input[type="radio"],
+input[type="checkbox"] {
   width: inherit;
   margin-right: 12px;
 }
@@ -115,6 +119,9 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 .member {
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none;
   width: 100px;
   height: 157px;
   background-color: salmon;

@@ -17,13 +17,13 @@ export default class Poodr extends Component {
   render() {
     return (
       <div id={"poodr"}>
-        {this.state.groups.length === 0 &&
+        {" "}{this.state.groups.length === 0 &&
           <div className={"options"}>
             <Options
               token={this.props.bot.bot_access_token}
               makeGroups={this.makeGroups.bind(this)}
-            />
-          </div>}
+            />{" "}
+          </div>}{" "}
         {this.state.groups.length > 0 &&
           <div className="notify-and-groups">
             <Notify
@@ -32,15 +32,35 @@ export default class Poodr extends Component {
               messagePeeps={this.messagePeeps.bind(this)}
               clearGroups={this.clearGroups.bind(this)}
             />{" "}
+            {" "}
             <Groups
               token={this.props.bot.bot_access_token}
               groups={this.state.groups}
               dragStartHandler={this.dragStartHandler.bind(this)}
               dropHandler={this.dropHandler.bind(this)}
+              memberClickHandler={this.memberClickHandler.bind(this)}
             />{" "}
+            {" "}
           </div>}{" "}
+        {" "}
       </div>
     );
+  }
+
+  memberClickHandler(event) {
+    const member = event.currentTarget;
+
+    if (member.dataset.enabled === "true") {
+      this.disable(member);
+    } else {
+      this.enable(member);
+      member.setAttribute("data-enabled", "true");
+      for (let i = 0; i < member.children.length; i++) {
+        member.children[i].setAttribute("draggable", "false");
+      }
+      member.setAttribute("draggable", "true");
+      member.style.backgroundColor = "salmon";
+    }
   }
 
   dragStartHandler(event) {
@@ -60,7 +80,7 @@ export default class Poodr extends Component {
     const data = event.dataTransfer.getData("text");
     const dropped = JSON.parse(data);
     const groups = this.state.groups;
-    removeUserFromGroup(dropped.u_id, groups[dropped.fromGroup]);
+    this.removeUserFromGroup(dropped.u_id, groups[dropped.fromGroup]);
     groups[toGroup].push(dropped.u_id);
     this.setState({ groups: groups });
   }
@@ -154,9 +174,53 @@ export default class Poodr extends Component {
       });
     });
   }
-}
 
-const removeUserFromGroup = (user, group) => {
-  const i = group.indexOf(user);
-  return group.splice(i, 1);
-};
+  removeUserFromGroup(user, group) {
+    const i = group.indexOf(user);
+    return group.splice(i, 1);
+  }
+
+  disable(member) {
+    const data = member.dataset;
+    const groupIndex = data.group_id;
+    const memberId = data.u_id;
+
+    member.setAttribute("data-enabled", "false");
+    member.setAttribute("draggable", "false");
+    member.style.backgroundColor = "red";
+
+    this.changeDescendantsAttributes(member, "draggable", "false");
+    this.removeMemberFrom(memberId, groupIndex);
+  }
+
+  enable(member) {
+    const data = member.dataset;
+    const groupIndex = data.group_id;
+    const memberId = data.u_id;
+
+    member.setAttribute("data-enabled", "false");
+    member.setAttribute("draggable", "false");
+    member.style.backgroundColor = "red";
+
+    this.changeDescendantsAttributes(member, "draggable", "false");
+    this.addMemberTo(memberId, groupIndex);
+  }
+
+  removeMemberFrom(memberId, groupIndex) {
+    const group = this.state.groups[groupIndex];
+    const i = group.indexOf(memberId);
+    group.splice(i, 1);
+  }
+
+  addMemberTo(memberId, groupIndex) {
+    const group = this.state.groups[groupIndex];
+    group.push(memberId);
+  }
+
+  changeDescendantsAttributes(member, attr, val) {
+    for (let i = 0; i < member.children.length; i++) {
+      member.children[i].setAttribute(attr, val);
+      this.changeDescendantsAttributes(member.children[i], attr, val);
+    }
+  }
+}
