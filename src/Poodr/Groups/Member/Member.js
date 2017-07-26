@@ -14,7 +14,7 @@ export default class Member extends Component {
 
   render() {
     return (
-      <div draggable="true" onDragStart={this.props.dragStartHandler} className="member" data-u_id={this.props.u_id}>
+      <div draggable="true" onDragStart={this.props.dragStartHandler} className="member" data-u_id={this.props.u_id} data-group_id={this.props.group_id}>
         {this.state.user &&
           <div className="member-info">
             <h6>

@@ -3,19 +3,51 @@ import Member from "./Member/Member";
 
 export default class Groups extends Component {
   render() {
-    let g_id = 0;
     return (
       <div className="groups">
-        { this.props.groups.map(group => {
-          g_id ++;
-          const groupWidth = group.length < 5 ? 226 : 334
+        {this.props.groups.map((group, i) => {
+          const groupWidth = group.length < 5 ? 226 : 334;
           return (
-            <div className="group" style={{maxWidth: groupWidth}} key={g_id} data-group-id={g_id}>
-              {group.map(member => <Member dragStartHandler={this.props.dragStartHandler} token={this.props.token} u_id={member} key={member} />)}
+            <div
+              className="group"
+              style={{ maxWidth: groupWidth }}
+              key={i}
+              data-group_id={i}
+              onDrop={this.props.dropHandler}
+              onDragEnter={this.dragEnterHandler}
+              onDragOver={this.dragOverHandler}
+              onDragLeave={this.dragLeaveHandler}
+              onDragExit={this.dragExitHandler}
+            >
+              {group.map(member =>
+                <Member
+                  dragStartHandler={this.props.dragStartHandler}
+                  token={this.props.token}
+                  u_id={member}
+                  group_id={i}
+                  key={member}
+                />
+              )}
             </div>
           );
         })}
       </div>
     );
+  }
+
+  dragEnterHandler(event) {
+    event.preventDefault();
+  }
+
+  dragOverHandler(event) {
+    event.preventDefault();
+  }
+
+  dragLeaveHandler(event) {
+    event.preventDefault();
+  }
+
+  dragExitHandler(event) {
+    event.preventDefault();
   }
 }

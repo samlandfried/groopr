@@ -58,6 +58,11 @@ body {
   background-color: lavender;
 }
 
+.group {
+  min-height: 175px;
+  min-width: 118px;
+}
+
 .groups {
   display: flex;
   flex-wrap: wrap;
