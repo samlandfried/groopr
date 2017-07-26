@@ -14,6 +14,41 @@ export default class Poodr extends Component {
     };
   }
 
+  render() {
+    return (
+      <div id={"poodr"}>
+        {this.state.groups.length === 0 &&
+          <div className={"options"}>
+            <Options
+              token={this.props.bot.bot_access_token}
+              makeGroups={this.makeGroups.bind(this)}
+            />
+          </div>}
+        {this.state.groups.length > 0 &&
+          <div className="notify-and-groups">
+            <Notify
+              user={this.props.user.name}
+              channel={this.state.channelName}
+              messagePeeps={this.messagePeeps.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
+            />{" "}
+            <Groups
+              token={this.props.bot.bot_access_token}
+              groups={this.state.groups}
+              dragStartHandler={this.dragStartHandler.bind(this)}
+            />{" "}
+          </div>}{" "}
+      </div>
+    );
+  }
+
+  dragStartHandler(event) {
+    const id = event.target.dataset.u_id;
+    const img = event.currentTarget.querySelector('img');
+    event.dataTransfer.setDragImage(img, 45, 45);
+    event.dataTransfer.dropEffect('move');
+  }
+
   clearGroups() {
     this.setState({ groups: [] });
   }
@@ -96,32 +131,5 @@ export default class Poodr extends Component {
         });
       });
     });
-  }
-
-  render() {
-    return (
-      <div id={"poodr"}>
-        {this.state.groups.length === 0 &&
-          <div className={"options"}>
-            <Options
-              token={this.props.bot.bot_access_token}
-              makeGroups={this.makeGroups.bind(this)}
-            />
-          </div>}
-        {this.state.groups.length > 0 &&
-          <div className="notify-and-groups">
-            <Notify
-              user={this.props.user.name}
-              channel={this.state.channelName}
-              messagePeeps={this.messagePeeps.bind(this)}
-              clearGroups={this.clearGroups.bind(this)}
-            />{" "}
-            <Groups
-              token={this.props.bot.bot_access_token}
-              groups={this.state.groups}
-            />{" "}
-          </div>}{" "}
-      </div>
-    );
   }
 }

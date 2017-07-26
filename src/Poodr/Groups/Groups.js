@@ -11,7 +11,7 @@ export default class Groups extends Component {
           const groupWidth = group.length < 5 ? 226 : 334
           return (
             <div className="group" style={{maxWidth: groupWidth}} key={g_id} data-group-id={g_id}>
-              {group.map(member => <Member token={this.props.token} u_id={member} key={member} />)}
+              {group.map(member => <Member dragStartHandler={this.props.dragStartHandler} token={this.props.token} u_id={member} key={member} />)}
             </div>
           );
         })}
