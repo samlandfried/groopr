@@ -11,7 +11,7 @@ export default class Notify extends Component {
         </a>
         <form id="notify-groups">
           <h2>Message:</h2>
-          <textarea autoFocus value={defaultMessage} cols="30" rows="4" />
+          <textarea autoFocus defaultValue={defaultMessage} cols="30" rows="4" />
           <div>
             <h3>Skip history?</h3>
             <input type="checkbox" id="skip-history" value="skipHistory" />

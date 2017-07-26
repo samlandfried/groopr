@@ -55,7 +55,6 @@ export default class Poodr extends Component {
             headers: new Headers({ "Content-Type": "application/json" }),
             body: JSON.stringify({ collection: members, options: options })
           };
-          debugger
 
           fetch(grooprUrl, body)
             .then(
