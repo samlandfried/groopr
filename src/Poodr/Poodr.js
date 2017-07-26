@@ -14,6 +14,10 @@ export default class Poodr extends Component {
     };
   }
 
+  clearGroups() {
+    this.setState({groups: []})
+  }
+
   makeGroups(channel_id) {
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
@@ -51,6 +55,7 @@ export default class Poodr extends Component {
             headers: new Headers({ "Content-Type": "application/json" }),
             body: JSON.stringify({ collection: members, options: options })
           };
+          debugger
 
           fetch(grooprUrl, body)
             .then(
@@ -68,8 +73,8 @@ export default class Poodr extends Component {
       );
   }
 
-  messagePeeps(e) {
-    e.preventDefault();
+  messagePeeps(event) {
+    event.preventDefault();
     const message = document.querySelector("form textarea").value;
     const skipHistory = document.querySelector('form input[type="checkbox"]')
       .checked;
@@ -85,7 +90,7 @@ export default class Poodr extends Component {
         const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
         fetch(dmUrl).then(resp => resp.json()).then(data => {
           if (data.ok) {
-            this.setState({groups: []});
+            this.clearGroups();
           } else {
             console.error(data);
           }
@@ -95,7 +100,6 @@ export default class Poodr extends Component {
   }
 
   render() {
-    // debugger
     return (
       <div id={"poodr"}>
         {this.state.groups.length === 0 &&
@@ -111,8 +115,12 @@ export default class Poodr extends Component {
               user={this.props.user.name}
               channel={this.state.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
             />{" "}
-            <Groups token={this.props.bot.bot_access_token} groups={this.state.groups} />{" "}
+            <Groups
+              token={this.props.bot.bot_access_token}
+              groups={this.state.groups}
+            />{" "}
           </div>}{" "}
       </div>
     );

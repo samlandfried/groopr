@@ -61,11 +61,11 @@ export default class Options extends Component {
           <input
             type="radio"
             name="odd-member-strategy"
-            value="bigger"
+            value="large"
             defaultChecked
           />
           Bigger groups <br />
-          <input type="radio" name="odd-member-strategy" value="smaller" />
+          <input type="radio" name="odd-member-strategy" value="small" />
           Smaller groups <br />
         </div>
         <div id="channel-search">
@@ -80,9 +80,8 @@ export default class Options extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.channels && /* Added for dev */
-                this.props.makeGroups(this.state.channels[0].id)
-                /* this.state.channels.map(channel => {
+              {this.state.channels &&
+                this.state.channels.map(channel => {
                   return (
                     <tr key={channel.id}>
                       <td>
@@ -94,7 +93,7 @@ export default class Options extends Component {
                         </a>
                       </td>
                     </tr>
-                  );*/
+                  );
                 })}
             </tbody>
           </table>
