@@ -44,12 +44,17 @@ class App extends Component {
   fetchUserInfo(user) {
     const token = user.access_token;
     const u_id = user.user_id;
+    console.log(token)
+    console.log(u_id)
+
     const url = `https://slack.com/api/users.info?token=${token}&user=${u_id}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
         const user = data.user.profile;
         this.setState({
           user: {
+            access_token: token,
+            u_id: u_id,
             name: user.real_name,
             image: user.image_48
           }

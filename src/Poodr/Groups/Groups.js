@@ -26,6 +26,7 @@ export default class Groups extends Component {
                   u_id={member}
                   group_id={i}
                   key={member}
+                  clickHandler={this.props.memberClickHandler}
                 />
               )}
             </div>
