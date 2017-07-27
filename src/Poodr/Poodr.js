@@ -120,7 +120,7 @@ export default class Poodr extends Component {
         function(data) {
           const members = data.channel.members;
           this.setState({ channelName: data.channel.name });
-          const grooprUrl = "http://groopr.herokuapp.com/api/v1/groups";
+          const grooprUrl = "https://groopr.herokuapp.com/api/v1/groups";
 
           const body = {
             method: "POST",
