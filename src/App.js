@@ -66,7 +66,7 @@ class App extends Component {
   }
 
   login(code) {
-    const url = `https://slack.com/api/oauth.access?client_id=${AUTH.clientId}&client_secret=${AUTH.clientSecret}&code=${code}&redirect_uri=https://samlandfried.github.io/poodr-react/callback&pretty=1`;
+    const url = `https://slack.com/api/oauth.access?client_id=${process.env.REACT_APP_SLACK_CLIENT_ID}&client_secret=${process.env.REACT_APP_SLACK_SECRET}&code=${code}&redirect_uri=${process.env.REACT_APP_SLACK_CALLBACK}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
         const bot = data.bot;

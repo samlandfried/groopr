@@ -2,10 +2,12 @@ import React, { Component } from "react";
 
 export default class AddToSlack extends Component {
   render() {
+    const url = `https://slack.com/oauth/authorize?scope=im:write,bot,users:read&client_id=${process.env.REACT_APP_SLACK_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SLACK_CALLBACK}&pretty=1`
+    console.log(url)
     return (
     <a
       id="addToSlackBtn"
-      href="https://slack.com/oauth/authorize?scope=im:write,bot,users:read&client_id=146403140194.210920080358&redirect_uri=https://samlandfried.github.io/poodr-react/callback&pretty=1"
+      href={url}
     >
       <img
         alt="Add to Slack"
