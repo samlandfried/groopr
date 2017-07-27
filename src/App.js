@@ -3,7 +3,6 @@ import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
-import { AUTH } from "./tokens";
 import history from "./history";
 
 class App extends Component {
@@ -44,8 +43,6 @@ class App extends Component {
   fetchUserInfo(user) {
     const token = user.access_token;
     const u_id = user.user_id;
-    console.log(token)
-    console.log(u_id)
 
     const url = `https://slack.com/api/users.info?token=${token}&user=${u_id}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
