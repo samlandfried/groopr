@@ -173,6 +173,50 @@ export default class Poodr extends Component {
         }
       });
     });
+    this.sendConfirmation(groups);
+  }
+
+  sendConfirmation(groups) {
+    const msg = this.buildMessage(groups);
+    let url = `https://slack.com/api/im.open?token=${this.props.bot
+      .bot_access_token}&user=${this.props.user.u_id}&pretty=1`;
+    fetch(url).then(resp => resp.json()).then(data => {
+      if (data.ok) {
+        const c_id = data.channel.id;
+        url = `https://slack.com/api/chat.postMessage?token=${this.props.bot
+          .bot_access_token}&channel=${c_id}&text=${msg}&pretty=1`;
+        console.log(url);
+        fetch(url).then(resp => resp.json()).then(data => {
+          console.log(data);
+          if (!data.ok) {
+            console.error(data.error);
+          }
+        });
+      } else {
+        console.error(data.error);
+      }
+    });
+  }
+
+  buildMessage() {
+    const groups = document.querySelectorAll(".group");
+    let msg = "@@@@@@@@@@\n";
+    msg += "@@@@ Groups @@@@\n";
+    msg += "@@@@@@@@@@\n";
+    let group, member;
+
+    for (let groupIndex = 0; groupIndex < groups.length; groupIndex++) {
+      msg += "\n#############";
+      msg += "\nGroup # " + (groupIndex + 1);
+      group = groups[groupIndex].querySelectorAll(".member");
+      for (let memberIndex = 0; memberIndex < group.length; memberIndex++) {
+        member = group[memberIndex];
+        msg += "\n" + member.querySelector("h6").innerText;
+      }
+      msg += "\n";
+    }
+
+    return encodeURIComponent(msg);
   }
 
   removeUserFromGroup(user, group) {
