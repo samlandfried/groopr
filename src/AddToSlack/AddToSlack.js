@@ -5,7 +5,7 @@ export default class AddToSlack extends Component {
     return (
     <a
       id="addToSlackBtn"
-      href="https://slack.com/oauth/authorize?scope=im:write,bot,users:read&client_id=146403140194.210920080358&redirect_uri=http://localhost:3000/callback"
+      href="https://slack.com/oauth/authorize?scope=im:write,bot,users:read&client_id=146403140194.210920080358&redirect_uri=https://samlandfried.github.io/poodr-react/callback&pretty=1"
     >
       <img
         alt="Add to Slack"

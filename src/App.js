@@ -79,6 +79,7 @@ class App extends Component {
         this.setState({ authed: true });
       } else {
         this.setState({ authed: false });
+        console.error(data.error)
       }
     });
   }
