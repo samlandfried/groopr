@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import history from "./../history";
 import loading from "./loading.svg";
-import { AUTH } from "./../tokens";
 
 export default class Callback extends Component {
   componentDidMount() {

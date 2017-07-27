@@ -3,23 +3,22 @@ import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
-import { AUTH } from "./tokens";
 import history from "./history";
 
 class App extends Component {
   constructor() {
     super();
-    // this.state = {};
+    this.state = {};
 
-    const user = {"access_token":AUTH.userToken,"user_id":"U4ABV446N"}
-    this.fetchUserInfo(user);
-    this.state = {
-      bot: {
-        bot_user_id: "U6CJ3H9MG",
-        bot_access_token: AUTH.botToken
-      },
-      authed: true
-    };
+    // const user = {"access_token":process.env.REACT,"user_id":"U4ABV446N"}
+    // this.fetchUserInfo(user);
+    // this.state = {
+    //   bot: {
+    //     bot_user_id: "U6CJ3H9MG",
+    //     bot_access_token: AUTH.botToken
+    //   },
+    //   authed: true
+    // };
   }
 
   componentDidMount() {
@@ -76,7 +75,7 @@ class App extends Component {
   }
 
   login(code) {
-    const url = `https://slack.com/api/oauth.access?client_id=${AUTH.clientId}&client_secret=${AUTH.clientSecret}&code=${code}&redirect_uri=http://localhost:3000/callback&pretty=1`;
+    const url = `https://slack.com/api/oauth.access?client_id=${process.env.REACT_APP_SLACK_CLIENT_ID}&client_secret=${process.env.REACT_APP_SLACK_SECRET}&code=${code}&redirect_uri=${process.env.REACT_APP_SLACK_CALLBACK}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
         const bot = data.bot;
