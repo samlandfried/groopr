@@ -40,6 +40,7 @@ class App extends Component {
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
             />}
         </section>
       </div>
@@ -48,6 +49,10 @@ class App extends Component {
 
   groupsChanger(groups) {
     this.setState({ groups: groups });
+  }
+
+  clearGroups() {
+    this.setState({ groups: [] });
   }
 
   fetchUserInfo(user) {

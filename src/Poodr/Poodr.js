@@ -29,7 +29,7 @@ export default class Poodr extends Component {
               user={this.props.user.name}
               channel={this.state.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
-              clearGroups={this.clearGroups.bind(this)}
+              clearGroups={this.props.clearGroups}
             />{" "}
             {" "}
             <Groups
@@ -127,10 +127,6 @@ export default class Poodr extends Component {
     this.props.groupsChanger(groups);
   }
 
-  clearGroups() {
-    this.setState({ groups: [] });
-  }
-
   messagePeeps(event) {
     event.preventDefault();
     const message = document.querySelector("form textarea").value;
@@ -142,7 +138,7 @@ export default class Poodr extends Component {
     // When it's just one user, this needs to be a DM w/ the bot. Different endpoint for DMs
     const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
     groups.forEach(group => {
-      const users = group.join(",");
+      const users = group.map(member => member.id).join(",");
 
       fetch(url + users).then(resp => resp.json()).then(data => {
         if (data.ok) {
@@ -150,7 +146,7 @@ export default class Poodr extends Component {
           const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
           fetch(dmUrl).then(resp => resp.json()).then(data => {
             if (data.ok) {
-              this.clearGroups();
+              this.props.clearGroups();
             } else {
               console.error(data.error);
             }
@@ -188,7 +184,7 @@ export default class Poodr extends Component {
   buildMessage() {
     const groups = document.querySelectorAll(".group");
     let msg = "@@@@@@@@@@\n";
-    msg += "@@@ GROUPS @@@\n";
+    msg += "@@@ Groups @@@\n";
     msg += "@@@@@@@@@@\n";
     let group, member;
 
@@ -198,7 +194,7 @@ export default class Poodr extends Component {
       group = groups[groupIndex].querySelectorAll(".member");
       for (let memberIndex = 0; memberIndex < group.length; memberIndex++) {
         member = group[memberIndex];
-        msg += "\n" + member.querySelector("h6").innerText;
+        msg += "\n - " + member.querySelector("h6").innerText;
       }
       msg += "\n";
     }
