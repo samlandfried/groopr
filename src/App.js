@@ -8,7 +8,7 @@ import history from "./history";
 class App extends Component {
   constructor() {
     super();
-    // this.state = {groups: []};
+    // this.state = { groups: [] };
 
     const user = {
       access_token: process.env.REACT_APP_USER_TOKEN,
@@ -22,7 +22,7 @@ class App extends Component {
       },
       groups: [],
       authed: true
-    };
+    }
   }
 
   componentDidMount() {
@@ -54,6 +54,7 @@ class App extends Component {
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
             />}
         </section>
       </div>
@@ -62,6 +63,10 @@ class App extends Component {
 
   groupsChanger(groups) {
     this.setState({ groups: groups });
+  }
+
+  clearGroups() {
+    this.setState({ groups: [] });
   }
 
   fetchUserInfo(user) {

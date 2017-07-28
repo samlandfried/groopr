@@ -19,7 +19,7 @@ export default class Groups extends Component {
               onDragLeave={this.dragLeaveHandler}
               onDragExit={this.dragExitHandler}
             >
-              {group.map(member => {
+              {group.map((member, memberIndex) => {
                 if (typeof member === "object") {
                   return (
                     <Member
@@ -28,7 +28,9 @@ export default class Groups extends Component {
                       u_id={member.id}
                       userName={member.name}
                       image={member.img}
-                      group_id={i}
+                      enabled={member.enabled}
+                      groupIndex={i}
+                      memberIndex={memberIndex}
                       key={member.id}
                       clickHandler={this.props.memberClickHandler}
                     />
