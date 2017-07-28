@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "auth0-js": "^8.8.0",
+    "bootstrap": "^3.3.7",
     "history": "^4.6.3",
     "jquery": "^3.2.1",
     "jwt-decode": "^2.2.0",

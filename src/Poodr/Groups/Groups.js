@@ -5,7 +5,7 @@ export default class Groups extends Component {
   render() {
     return (
       <div className="groups">
-        {this.props.groups.map((group, i) => {
+        {this.props.groups && this.props.groups.map((group, i) => {
           const groupWidth = group.length < 5 ? 226 : 334;
           return (
             <div
@@ -19,16 +19,24 @@ export default class Groups extends Component {
               onDragLeave={this.dragLeaveHandler}
               onDragExit={this.dragExitHandler}
             >
-              {group.map(member =>
-                <Member
-                  dragStartHandler={this.props.dragStartHandler}
-                  token={this.props.token}
-                  u_id={member}
-                  group_id={i}
-                  key={member}
-                  clickHandler={this.props.memberClickHandler}
-                />
-              )}
+              {group.map(member => {
+                if (typeof member === "object") {
+                  return (
+                    <Member
+                      dragStartHandler={this.props.dragStartHandler}
+                      token={this.props.token}
+                      u_id={member.id}
+                      userName={member.name}
+                      image={member.img}
+                      group_id={i}
+                      key={member.id}
+                      clickHandler={this.props.memberClickHandler}
+                    />
+                  );
+                } else {
+                  return null;
+                }
+              })}
             </div>
           );
         })}

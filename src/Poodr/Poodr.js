@@ -9,7 +9,6 @@ export default class Poodr extends Component {
     super();
     this.state = {
       user: {},
-      groups: [],
       channelName: null
     };
   }
@@ -17,14 +16,14 @@ export default class Poodr extends Component {
   render() {
     return (
       <div id={"poodr"}>
-        {" "}{this.state.groups.length === 0 &&
+        {" "}{this.props.groups.length === 0 &&
           <div className={"options"}>
             <Options
               token={this.props.bot.bot_access_token}
-              makeGroups={this.makeGroups.bind(this)}
+              makeGroups={this.props.makeGroups}
             />{" "}
           </div>}{" "}
-        {this.state.groups.length > 0 &&
+        {this.props.groups.length > 0 &&
           <div className="notify-and-groups">
             <Notify
               user={this.props.user.name}
@@ -35,7 +34,7 @@ export default class Poodr extends Component {
             {" "}
             <Groups
               token={this.props.bot.bot_access_token}
-              groups={this.state.groups}
+              groups={this.props.groups}
               dragStartHandler={this.dragStartHandler.bind(this)}
               dropHandler={this.dropHandler.bind(this)}
               memberClickHandler={this.memberClickHandler.bind(this)}
@@ -45,6 +44,49 @@ export default class Poodr extends Component {
         {" "}
       </div>
     );
+  }
+
+  componentDidUpdate() {
+    this.props.groups.forEach(group => {
+      group.forEach(member => {
+        if (typeof member === "string") {
+          this.fetchMember(member);
+        }
+      });
+    });
+  }
+
+  fetchMember(u_id) {
+    const url = `https://slack.com/api/users.info?token=${this.props.bot.bot_access_token}&user=${u_id}&pretty=1`;
+    fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+        const deets = data.user.profile;
+        const id = data.user.id;
+        const user = {
+          enabled: true,
+          id: id,
+          name: deets.real_name,
+          img: deets.image_192
+        };
+
+        this.mapGroup(user);
+      })
+      .catch(error => console.error(error));
+  }
+
+  mapGroup(user) {
+    const u_id = user.id;
+    const groupsCopy = this.props.groups;
+
+    groupsCopy.forEach((group, groupIndex) => {
+      const memberIndex = group.indexOf(u_id);
+      if (memberIndex > -1) {
+        groupsCopy[groupIndex][memberIndex] = user;
+      }
+    });
+
+    this.setState({ groups: groupsCopy });
   }
 
   memberClickHandler(event) {
@@ -79,69 +121,14 @@ export default class Poodr extends Component {
     const toGroup = event.currentTarget.dataset.group_id;
     const data = event.dataTransfer.getData("text");
     const dropped = JSON.parse(data);
-    const groups = this.state.groups;
-    this.removeUserFromGroup(dropped.u_id, groups[dropped.fromGroup]);
-    groups[toGroup].push(dropped.u_id);
-    this.setState({ groups: groups });
+    const groups = this.props.groups;
+    const member = this.pluckMemberFromGroup(dropped.u_id, groups[dropped.fromGroup]);
+    groups[toGroup].push(member);
+    this.props.groupsChanger(groups);
   }
 
   clearGroups() {
     this.setState({ groups: [] });
-  }
-
-  makeGroups(channel_id) {
-    const form = document.querySelector("#grouping-options");
-    const groupingStrategy = form.querySelector("#grouping-strategy-select")
-      .value;
-    const groupSize = form.querySelector("#group-size-select").value;
-    const oddMemberStrategy = document.querySelector(
-      'input[name="odd-member-strategy"]:checked'
-    ).value;
-    const options = {
-      size: groupSize,
-      oddMemberStrategy: oddMemberStrategy,
-      groupingStrategy: groupingStrategy
-    };
-
-    const token = this.props.bot.bot_access_token;
-    const url =
-      "https://slack.com/api/channels.info?token=" +
-      token +
-      "&channel=" +
-      channel_id;
-
-    fetch(url)
-      .then(
-        function(resp) {
-          return resp.json();
-        }.bind(this)
-      )
-      .then(
-        function(data) {
-          const members = data.channel.members;
-          this.setState({ channelName: data.channel.name });
-          const grooprUrl = "http://groopr.herokuapp.com/api/v1/groups";
-
-          const body = {
-            method: "POST",
-            headers: new Headers({ "Content-Type": "application/json" }),
-            body: JSON.stringify({ collection: members, options: options })
-          };
-
-          fetch(grooprUrl, body)
-            .then(
-              function(resp) {
-                return resp.json();
-              }.bind(this)
-            )
-            .then(data => {
-              this.setState({
-                groups: data.groups
-              });
-            })
-            .catch(error => console.error(error));
-        }.bind(this)
-      );
   }
 
   messagePeeps(event) {
@@ -150,7 +137,7 @@ export default class Poodr extends Component {
     const skipHistory = document.querySelector('form input[type="checkbox"]')
       .checked;
     const token = this.props.bot.bot_access_token;
-    const groups = this.state.groups;
+    const groups = this.props.groups;
 
     // When it's just one user, this needs to be a DM w/ the bot. Different endpoint for DMs
     const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
@@ -219,9 +206,11 @@ export default class Poodr extends Component {
     return encodeURIComponent(msg);
   }
 
-  removeUserFromGroup(user, group) {
-    const i = group.indexOf(user);
-    return group.splice(i, 1);
+  pluckMemberFromGroup(u_id, group) {
+    const i = group.findIndex(member => {
+      return member.id === u_id
+    });
+    return group.splice(i, 1)[0];
   }
 
   disable(member) {
