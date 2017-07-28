@@ -188,7 +188,7 @@ export default class Poodr extends Component {
   buildMessage() {
     const groups = document.querySelectorAll(".group");
     let msg = "@@@@@@@@@@\n";
-    msg += "@@@@ Groups @@@@\n";
+    msg += "@@@ GROUPS @@@\n";
     msg += "@@@@@@@@@@\n";
     let group, member;
 
