@@ -53,10 +53,15 @@ class App extends Component {
               bot={this.state.bot}
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
+              clearGroups={this.clearGroups.bind(this)}
             />}
         </section>
       </div>
     );
+  }
+
+  clearGroups() {
+    this.setState({ groups: [] });
   }
 
   fetchUserInfo(user) {
