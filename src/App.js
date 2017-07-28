@@ -8,7 +8,21 @@ import history from "./history";
 class App extends Component {
   constructor() {
     super();
-    this.state = { groups: [] };
+    // this.state = { groups: [] };
+
+    const user = {
+      access_token: process.env.REACT_APP_USER_TOKEN,
+      user_id: "U4ABV446N"
+    };
+    this.fetchUserInfo(user);
+    this.state = {
+      bot: {
+        bot_user_id: "U6CJ3H9MG",
+        bot_access_token: process.env.REACT_APP_BOT_TOKEN
+      },
+      groups: [],
+      authed: true
+    }
   }
 
   componentDidMount() {
@@ -59,8 +73,6 @@ class App extends Component {
   fetchUserInfo(user) {
     const token = user.access_token;
     const u_id = user.user_id;
-    console.log(token);
-    console.log(u_id);
 
     const url = `https://slack.com/api/users.info?token=${token}&user=${u_id}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
