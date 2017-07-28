@@ -191,12 +191,14 @@ export default class Poodr extends Component {
     let group, member;
 
     for (let groupIndex = 0; groupIndex < groups.length; groupIndex++) {
-      msg += "\n#############";
+      msg += "\n\n#############";
       msg += "\nGroup # " + (groupIndex + 1);
       group = groups[groupIndex].querySelectorAll(".member");
       for (let memberIndex = 0; memberIndex < group.length; memberIndex++) {
         member = group[memberIndex];
-        msg += "\n - " + member.querySelector("h6").innerText;
+        if(member.dataset.enabled === 'true') {
+          msg += "\n - " + member.querySelector("h6").innerText;
+        }
       }
       msg += "\n";
     }
@@ -209,49 +211,5 @@ export default class Poodr extends Component {
       return member.id === u_id
     });
     return group.splice(i, 1)[0];
-  }
-
-  disable(member) {
-    const data = member.dataset;
-    const groupIndex = data.group_id;
-    const memberId = data.u_id;
-
-    member.setAttribute("data-enabled", "false");
-    member.setAttribute("draggable", "false");
-    member.style.backgroundColor = "red";
-
-    this.changeDescendantsAttributes(member, "draggable", "false");
-    this.removeMemberFrom(memberId, groupIndex);
-  }
-
-  enable(member) {
-    const data = member.dataset;
-    const groupIndex = data.group_id;
-    const memberId = data.u_id;
-
-    member.setAttribute("data-enabled", "false");
-    member.setAttribute("draggable", "false");
-    member.style.backgroundColor = "red";
-
-    this.changeDescendantsAttributes(member, "draggable", "false");
-    this.addMemberTo(memberId, groupIndex);
-  }
-
-  removeMemberFrom(memberId, groupIndex) {
-    const group = this.state.groups[groupIndex];
-    const i = group.indexOf(memberId);
-    group.splice(i, 1);
-  }
-
-  addMemberTo(memberId, groupIndex) {
-    const group = this.state.groups[groupIndex];
-    group.push(memberId);
-  }
-
-  changeDescendantsAttributes(member, attr, val) {
-    for (let i = 0; i < member.children.length; i++) {
-      member.children[i].setAttribute(attr, val);
-      this.changeDescendantsAttributes(member.children[i], attr, val);
-    }
   }
 }
