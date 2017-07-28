@@ -181,6 +181,10 @@ a {
   color: black;
 }
 
-.warning {
+.enabled {
+  background-color: salmon;
+}
+
+.warning, .disabled {
   background-color: red;
 }

@@ -93,31 +93,18 @@ export default class Poodr extends Component {
     const data = event.currentTarget.dataset;
     const groupIndex = data.groupindex;
     const memberIndex = data.memberindex;
-
     const groups = this.props.groups;
     const member = groups[groupIndex][memberIndex];
+
     member.enabled = !member.enabled
-
     this.props.groupsChanger(groups)
-
-    // if (member.dataset.enabled === "true") {
-    //   this.disable(member);
-    // } else {
-    //   this.enable(member);
-    //   member.setAttribute("data-enabled", "true");
-    //   for (let i = 0; i < member.children.length; i++) {
-    //     member.children[i].setAttribute("draggable", "false");
-    //   }
-    //   member.setAttribute("draggable", "true");
-    //   member.style.backgroundColor = "salmon";
-    // }
   }
 
   dragStartHandler(event) {
     const img = event.currentTarget.querySelector("img");
     const dataToSend = {
       u_id: event.currentTarget.dataset.u_id,
-      fromGroup: event.currentTarget.dataset.group_id
+      fromGroup: event.currentTarget.dataset.groupindex
     };
     event.dataTransfer.setDragImage(img, 45, 45);
     event.dataTransfer.dropEffect = "move";
@@ -146,7 +133,14 @@ export default class Poodr extends Component {
     // When it's just one user, this needs to be a DM w/ the bot. Different endpoint for DMs
     const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
     groups.forEach(group => {
-      const users = group.map(member => member.id).join(",");
+      const membersToMessage = group.reduce((group, member) => {
+        if(member.enabled) {
+          group.push(member.id);
+        }
+        return group;
+      }, new Array);
+
+      const users = membersToMessage.join(",");
 
       fetch(url + users).then(resp => resp.json()).then(data => {
         if (data.ok) {
