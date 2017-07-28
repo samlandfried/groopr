@@ -24,8 +24,7 @@ class App extends Component {
       authed: true
     };
   }
-
-  componentDidMount() {
+componentDidMount() {
     if (localStorage.code) {
       this.login(localStorage.code);
       localStorage.removeItem("code");
@@ -53,10 +52,15 @@ class App extends Component {
               bot={this.state.bot}
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
+              groupsChanger={this.groupsChanger.bind(this)}
             />}
         </section>
       </div>
     );
+  }
+
+  groupsChanger(groups) {
+    this.setState({groups: groups});
   }
 
   fetchUserInfo(user) {

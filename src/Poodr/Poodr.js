@@ -61,7 +61,6 @@ export default class Poodr extends Component {
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
-        console.log('Data from ', data)
         const deets = data.user.profile;
         const id = data.user.id;
         const user = {
@@ -123,9 +122,9 @@ export default class Poodr extends Component {
     const data = event.dataTransfer.getData("text");
     const dropped = JSON.parse(data);
     const groups = this.props.groups;
-    this.removeUserFromGroup(dropped.u_id, groups[dropped.fromGroup]);
-    groups[toGroup].push(dropped.u_id);
-    this.setState({ groups: groups });
+    const member = this.pluckMemberFromGroup(dropped.u_id, groups[dropped.fromGroup]);
+    groups[toGroup].push(member);
+    this.props.groupsChanger(groups);
   }
 
   clearGroups() {
@@ -207,9 +206,11 @@ export default class Poodr extends Component {
     return encodeURIComponent(msg);
   }
 
-  removeUserFromGroup(user, group) {
-    const i = group.indexOf(user);
-    return group.splice(i, 1);
+  pluckMemberFromGroup(u_id, group) {
+    const i = group.findIndex(member => {
+      return member.id === u_id
+    });
+    return group.splice(i, 1)[0];
   }
 
   disable(member) {
