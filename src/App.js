@@ -55,6 +55,7 @@ class App extends Component {
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
               clearGroups={this.clearGroups.bind(this)}
+              channelName={this.state.channelName}
             />}
         </section>
       </div>

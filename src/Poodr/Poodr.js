@@ -27,7 +27,7 @@ export default class Poodr extends Component {
           <div className="notify-and-groups">
             <Notify
               user={this.props.user.name}
-              channel={this.state.channelName}
+              channel={this.props.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
               clearGroups={this.props.clearGroups}
             />{" "}
@@ -148,6 +148,7 @@ export default class Poodr extends Component {
           const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
           fetch(dmUrl).then(resp => resp.json()).then(data => {
             if (data.ok) {
+              console.log(data);
               this.props.clearGroups();
             } else {
               console.error(data.error);

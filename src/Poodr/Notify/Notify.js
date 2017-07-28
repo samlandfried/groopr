@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class Notify extends Component {
   render() {
-    const defaultMessage = `You have been assigned to this group from ${this
+    const defaultMessage = `You have been assigned to this group from @${this
       .props.channel} by ${this.props.user}`;
     return (
       <div className="notify options">
@@ -11,7 +11,7 @@ export default class Notify extends Component {
         </a>
         <form id="notify-groups">
           <h2>Message:</h2>
-          <textarea autoFocus defaultValue={defaultMessage} cols="30" rows="4" />
+          <textarea defaultValue={defaultMessage} cols="30" rows="4" />
           <div>
             <h3>Skip history?</h3>
             <input type="checkbox" id="skip-history" value="skipHistory" />
