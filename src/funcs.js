@@ -34,5 +34,17 @@ module.exports = {
         cookies[val[0].replace(/^\s+|\s+$/g, "")] = val[1];
         return cookies;
       }, new Object());
+  },
+
+  createCookie: (key, val, daysValid) => {
+    let expires
+    if(daysValid) {
+      const date = new Date();
+      date.setTime(date.getTime() + (daysValid*24*60*60*1000));
+      expires = '; expires=' + date.toGMTString();
+    } else {
+      expires = '';
+    }
+    document.cookie = key + '=' + val + expires + '; path=/';
   }
 };

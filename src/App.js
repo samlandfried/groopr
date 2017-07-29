@@ -82,6 +82,7 @@ export default class App extends Component {
           }
         });
       } else {
+        this.logOut();
         console.error(new Error(data));
       }
     });
@@ -94,11 +95,9 @@ export default class App extends Component {
       .REACT_APP_SLACK_CALLBACK}&pretty=1`;
     fetch(url).then(_.json).then(data => {
       if (data.ok) {
-        document.cookie = "authed=true";
-        document.cookie = "user_id=" + data.user_id;
-        document.cookie = "bot_token=" + data.bot.bot_access_token;
-        console.log(_.cookies());
-        debugger;
+        _.createCookie('authed', 'true', 30)
+        _.createCookie('user_id', data.user_id, 30)
+        _.createCookie('bot_token', data.bot.bot_access_token, 30)
         history.replace("/");
       } else {
         this.logOut();
