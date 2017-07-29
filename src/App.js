@@ -4,8 +4,9 @@ import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
 import history from "./history";
+import _ from "./funcs"
 
-class App extends Component {
+export default class App extends Component {
   constructor() {
     super();
     this.state = { groups: [] };
@@ -16,7 +17,7 @@ class App extends Component {
       this.login(localStorage.code);
       localStorage.removeItem("code");
     }
-    if (localStorage.authed) {
+    if (_.cookies().authed) {
       this.fetchUserInfo();
     }
   }
@@ -30,8 +31,8 @@ class App extends Component {
               Poodr on GitHub
             </div>
           </a>
-          {!localStorage.authed && <AddToSlack />}
-          {localStorage.authed &&
+          {!_.cookies().authed && <AddToSlack />}
+          {_.cookies().authed &&
             this.state.user &&
             <div className="user-authed">
               <UserInfo user={this.state.user} />
@@ -44,10 +45,10 @@ class App extends Component {
             </div>}
         </section>
         <section className="main">
-          {localStorage.authed &&
+          {_.cookies().authed &&
             <Poodr
               user={this.state.user}
-              botToken={localStorage.bot_token}
+              botToken={_.cookies().bot_token}
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
@@ -67,9 +68,10 @@ class App extends Component {
   }
 
   fetchUserInfo() {
-    const url = `https://slack.com/api/users.info?token=${localStorage.bot_token}&user=${localStorage.user_id}&pretty=1`;
+    const url = `https://slack.com/api/users.info?token=${_.cookies()
+      .bot_token}&user=${_.cookies().user_id}&pretty=1`;
 
-    fetch(url).then(resp => resp.json()).then(data => {
+    fetch(url).then(_.json).then(data => {
       if (data.ok) {
         const user = data.user.profile;
 
@@ -90,12 +92,14 @@ class App extends Component {
       .REACT_APP_SLACK_CLIENT_ID}&client_secret=${process.env
       .REACT_APP_SLACK_SECRET}&code=${code}&redirect_uri=${process.env
       .REACT_APP_SLACK_CALLBACK}&pretty=1`;
-    fetch(url).then(resp => resp.json()).then(data => {
+    fetch(url).then(_.json).then(data => {
       if (data.ok) {
-        localStorage.setItem("authed", true);
-        localStorage.setItem("user_id", data.user_id);
-        localStorage.setItem("bot_token", data.bot.bot_access_token);
-          history.replace('/')
+        document.cookie = "authed=true";
+        document.cookie = "user_id=" + data.user_id;
+        document.cookie = "bot_token=" + data.bot.bot_access_token;
+        console.log(_.cookies());
+        debugger;
+        history.replace("/");
       } else {
         this.logOut();
         console.error(new Error(data));
@@ -105,12 +109,14 @@ class App extends Component {
 
   logOut(event) {
     event && event.preventDefault();
-    console.log('Logged out!')
-    localStorage.removeItem("authed");
-    localStorage.removeItem("bot-token");
-    localStorage.removeItem("user-token");
-    localStorage.removeItem("user-id");
-    history.replace('/');
+    document.cookie = "authed=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "bot-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie =
+      "user-id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    history.replace("/");
   }
 
   getFormVals() {
@@ -125,8 +131,8 @@ class App extends Component {
     let usergroups = document.querySelectorAll(
       'input[name="usergroup"]:checked'
     );
-    channels = nodeListMap(channels, channel => channel.value);
-    usergroups = nodeListMap(usergroups, usergroup => usergroup.value);
+    channels = _.nodeListMap(channels, channel => channel.value);
+    usergroups = _.nodeListMap(usergroups, usergroup => usergroup.value);
 
     return {
       size: groupSize,
@@ -140,7 +146,7 @@ class App extends Component {
   makeGroups(event) {
     event.preventDefault();
     const options = this.getFormVals();
-    const token = localStorage.bot_token;
+    const token = _.cookies().bot_token;
     const channels = options.channels.map(channel => {
       const url =
         "https://slack.com/api/channels.info?token=" +
@@ -149,7 +155,7 @@ class App extends Component {
         channel;
 
       return fetch(url)
-        .then(json)
+        .then(_.json)
         .then(data => data)
         .catch(error => new Error(error));
     });
@@ -162,7 +168,7 @@ class App extends Component {
         usergroup;
 
       return fetch(url)
-        .then(json)
+        .then(_.json)
         .then(data => data)
         .catch(error => new Error(error));
     });
@@ -182,7 +188,7 @@ class App extends Component {
         return users;
       }, []);
 
-      const uniqueUserIds = unique(userIds);
+      const uniqueUserIds = _.unique(userIds);
       this.callGroopr(uniqueUserIds, options);
     });
   }
@@ -197,7 +203,7 @@ class App extends Component {
     };
 
     fetch(grooprUrl, body)
-      .then(json)
+      .then(_.json)
       .then(data => {
         this.setState({
           groups: data.groups
@@ -206,37 +212,3 @@ class App extends Component {
       .catch(error => console.error(error));
   }
 }
-
-export default App;
-
-const getCode = queryString => {
-  const firstParam = queryString.split("&")[0];
-  const code = firstParam.split("=")[1];
-  return code;
-};
-
-const json = response => response.json();
-const status = response => {
-  if (response.ok) {
-    Promise.resolve(response);
-  } else {
-    Promise.reject(response);
-  }
-};
-
-const nodeListMap = (nodeList, cn) => {
-  const newArray = [];
-  for (let i = 0; i < nodeList.length; i++) {
-    newArray.push(cn(nodeList[i]));
-  }
-  return newArray;
-};
-
-const unique = collection => {
-  return collection.reduce((result, ele) => {
-    if (!result.includes(ele)) {
-      result.push(ele);
-    }
-    return result;
-  }, []);
-};

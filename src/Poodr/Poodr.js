@@ -3,6 +3,7 @@ import Options from "./Options/Options";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 import history from "./../history";
+import _ from './../funcs';
 
 export default class Poodr extends Component {
   constructor() {
@@ -53,9 +54,9 @@ export default class Poodr extends Component {
   }
 
   fetchUserInfo() {
-    const url = `https://slack.com/api/users.info?token=${localStorage.user_token}&user=${localStorage.user_id}&pretty=1`;
+    const url = `https://slack.com/api/users.info?token=${_.cookies().user_token}&user=${_.cookies().user_id}&pretty=1`;
 
-    fetch(url).then(resp => resp.json()).then(data => {
+    fetch(url).then(_.json).then(data => {
       debugger;
       if (data.ok) {
         const user = data.user.profile;
@@ -76,7 +77,7 @@ export default class Poodr extends Component {
   fetchMember(u_id) {
     const url = `https://slack.com/api/users.info?token=${this.props.botToken}&user=${u_id}&pretty=1`;
     fetch(url)
-      .then(resp => resp.json())
+      .then(_.json)
       .then(data => {
         const deets = data.user.profile;
         const id = data.user.id;
@@ -159,11 +160,11 @@ export default class Poodr extends Component {
 
       const users = membersToMessage.join(",");
 
-      fetch(url + users).then(resp => resp.json()).then(data => {
+      fetch(url + users).then(_.json).then(data => {
         if (data.ok) {
           const g_id = data.group.id;
           const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
-          fetch(dmUrl).then(resp => resp.json()).then(data => {
+          fetch(dmUrl).then(_.json).then(data => {
             if (data.ok) {
               this.props.clearGroups();
             } else {
@@ -180,14 +181,12 @@ export default class Poodr extends Component {
 
   sendConfirmation(groups) {
     const msg = this.buildMessage(groups);
-    let url = `https://slack.com/api/im.open?token=${this.props.botToken}&user=${localStorage.user_id}&pretty=1`;
-    fetch(url).then(resp => resp.json()).then(data => {
+    let url = `https://slack.com/api/im.open?token=${this.props.botToken}&user=${_.cookies().user_id}&pretty=1`;
+    fetch(url).then(_.json).then(data => {
       if (data.ok) {
         const c_id = data.channel.id;
         url = `https://slack.com/api/chat.postMessage?token=${this.props.botToken}&channel=${c_id}&text=${msg}&pretty=1`;
-        console.log(url);
-        fetch(url).then(resp => resp.json()).then(data => {
-          console.log(data);
+        fetch(url).then(_.json).then(data => {
           if (!data.ok) {
             console.error(data.error);
           }
