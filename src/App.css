@@ -6,7 +6,7 @@ body {
   background-size: cover;
 }
 
-.navbar {
+.navbar, .user-authed {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
@@ -84,7 +84,7 @@ body {
 }
 
 .options select,
-input {
+.options input {
   border-style: none;
   width: 100%;
 }

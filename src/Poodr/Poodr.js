@@ -7,10 +7,7 @@ import history from "./../history";
 export default class Poodr extends Component {
   constructor() {
     super();
-    this.state = {
-      user: {},
-      channelName: null
-    };
+    this.state = {};
   }
 
   render() {
@@ -19,7 +16,7 @@ export default class Poodr extends Component {
         {" "}{this.props.groups.length === 0 &&
           <div className={"options"} id="initial-options">
             <Options
-              token={this.props.bot.bot_access_token}
+              token={this.props.botToken}
               makeGroups={this.props.makeGroups}
             />{" "}
           </div>}{" "}
@@ -27,13 +24,12 @@ export default class Poodr extends Component {
           <div className="notify-and-groups">
             <Notify
               user={this.props.user.name}
-              channel={this.props.channelName}
               messagePeeps={this.messagePeeps.bind(this)}
               clearGroups={this.props.clearGroups}
             />{" "}
             {" "}
             <Groups
-              token={this.props.bot.bot_access_token}
+              token={this.props.botToken}
               groups={this.props.groups}
               dragStartHandler={this.dragStartHandler.bind(this)}
               dropHandler={this.dropHandler.bind(this)}
@@ -56,8 +52,29 @@ export default class Poodr extends Component {
     });
   }
 
+  fetchUserInfo() {
+    const url = `https://slack.com/api/users.info?token=${localStorage.user_token}&user=${localStorage.user_id}&pretty=1`;
+
+    fetch(url).then(resp => resp.json()).then(data => {
+      debugger;
+      if (data.ok) {
+        const user = data.user.profile;
+        this.setState({
+          user: {
+            name: user.real_name,
+            image: user.image_48
+          }
+        });
+      } else {
+        this.logOut();
+        console.error(new Error(data));
+      }
+    });
+  }
+
+
   fetchMember(u_id) {
-    const url = `https://slack.com/api/users.info?token=${this.props.bot.bot_access_token}&user=${u_id}&pretty=1`;
+    const url = `https://slack.com/api/users.info?token=${this.props.botToken}&user=${u_id}&pretty=1`;
     fetch(url)
       .then(resp => resp.json())
       .then(data => {
@@ -127,7 +144,7 @@ export default class Poodr extends Component {
     const message = document.querySelector("form textarea").value;
     const skipHistory = document.querySelector('form input[type="checkbox"]')
       .checked;
-    const token = this.props.bot.bot_access_token;
+    const token = this.props.botToken;
     const groups = this.props.groups;
 
     // When it's just one user, this needs to be a DM w/ the bot. Different endpoint for DMs
@@ -148,7 +165,6 @@ export default class Poodr extends Component {
           const dmUrl = `https://slack.com/api/chat.postMessage?token=${token}&channel=${g_id}&text=${message}&pretty=1`;
           fetch(dmUrl).then(resp => resp.json()).then(data => {
             if (data.ok) {
-              console.log(data);
               this.props.clearGroups();
             } else {
               console.error(data.error);
@@ -164,13 +180,11 @@ export default class Poodr extends Component {
 
   sendConfirmation(groups) {
     const msg = this.buildMessage(groups);
-    let url = `https://slack.com/api/im.open?token=${this.props.bot
-      .bot_access_token}&user=${this.props.user.u_id}&pretty=1`;
+    let url = `https://slack.com/api/im.open?token=${this.props.botToken}&user=${localStorage.user_id}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
         const c_id = data.channel.id;
-        url = `https://slack.com/api/chat.postMessage?token=${this.props.bot
-          .bot_access_token}&channel=${c_id}&text=${msg}&pretty=1`;
+        url = `https://slack.com/api/chat.postMessage?token=${this.props.botToken}&channel=${c_id}&text=${msg}&pretty=1`;
         console.log(url);
         fetch(url).then(resp => resp.json()).then(data => {
           console.log(data);

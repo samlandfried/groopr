@@ -16,32 +16,42 @@ class App extends Component {
       this.login(localStorage.code);
       localStorage.removeItem("code");
     }
+    if (localStorage.authed) {
+      this.fetchUserInfo();
+    }
   }
 
   render() {
     return (
       <div id="App">
         <section className="navbar">
-          <div className="brand button" id="navbar-brand">
-            <a href="https://github.com/samlandfried/poodr-react">
+          <a href="https://github.com/samlandfried/poodr-react">
+            <div className="brand button" id="navbar-brand">
               Poodr on GitHub
-            </a>
-          </div>
-          {!this.state.authed && <AddToSlack />}
-          {this.state.authed &&
+            </div>
+          </a>
+          {!localStorage.authed && <AddToSlack />}
+          {localStorage.authed &&
             this.state.user &&
-            <UserInfo user={this.state.user} />}
+            <div className="user-authed">
+              <UserInfo user={this.state.user} />
+              <input
+                type="submit"
+                value="Logout"
+                className="button"
+                onClick={this.logOut}
+              />
+            </div>}
         </section>
         <section className="main">
-          {this.state.authed &&
+          {localStorage.authed &&
             <Poodr
               user={this.state.user}
-              bot={this.state.bot}
+              botToken={localStorage.bot_token}
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
               clearGroups={this.clearGroups.bind(this)}
-              channelName={this.state.channelName}
             />}
         </section>
       </div>
@@ -56,24 +66,21 @@ class App extends Component {
     this.setState({ groups: [] });
   }
 
-  fetchUserInfo(user) {
-    const token = user.access_token;
-    const u_id = user.user_id;
+  fetchUserInfo() {
+    const url = `https://slack.com/api/users.info?token=${localStorage.bot_token}&user=${localStorage.user_id}&pretty=1`;
 
-    const url = `https://slack.com/api/users.info?token=${token}&user=${u_id}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
         const user = data.user.profile;
+
         this.setState({
           user: {
-            access_token: token,
-            u_id: u_id,
             name: user.real_name,
             image: user.image_48
           }
         });
       } else {
-        console.error(data);
+        console.error(new Error(data));
       }
     });
   }
@@ -85,18 +92,25 @@ class App extends Component {
       .REACT_APP_SLACK_CALLBACK}&pretty=1`;
     fetch(url).then(resp => resp.json()).then(data => {
       if (data.ok) {
-        const bot = data.bot;
-        const user = {
-          access_token: data.access_token,
-          user_id: data.user_id
-        };
-        this.fetchUserInfo(user);
-        this.setState({ bot: bot });
-        this.setState({ authed: true });
+        localStorage.setItem("authed", true);
+        localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("bot_token", data.bot.bot_access_token);
+          history.replace('/')
       } else {
-        this.setState({ authed: false });
+        this.logOut();
+        console.error(new Error(data));
       }
     });
+  }
+
+  logOut(event) {
+    event && event.preventDefault();
+    console.log('Logged out!')
+    localStorage.removeItem("authed");
+    localStorage.removeItem("bot-token");
+    localStorage.removeItem("user-token");
+    localStorage.removeItem("user-id");
+    history.replace('/');
   }
 
   getFormVals() {
@@ -126,7 +140,7 @@ class App extends Component {
   makeGroups(event) {
     event.preventDefault();
     const options = this.getFormVals();
-    const token = this.state.bot.bot_access_token;
+    const token = localStorage.bot_token;
     const channels = options.channels.map(channel => {
       const url =
         "https://slack.com/api/channels.info?token=" +
@@ -173,7 +187,7 @@ class App extends Component {
     });
   }
 
-  callGroopr(members,options) {
+  callGroopr(members, options) {
     const grooprUrl = "https://groopr.herokuapp.com/api/v1/groups";
 
     const body = {
