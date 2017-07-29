@@ -123,7 +123,8 @@ export default class Options extends Component {
     let name;
     for(let i = 0; i < trs.length; i ++) {
       trs[i].style.display = '';
-      name = trs[i].firstElementChild.firstElementChild.innerText;
+      name = trs[i].querySelector('label').innerText;
+
       if(!name.includes(query)) {
         trs[i].style.display = 'none';
       }
