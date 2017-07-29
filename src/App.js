@@ -8,21 +8,7 @@ import history from "./history";
 class App extends Component {
   constructor() {
     super();
-    // this.state = { groups: [] };
-
-    const user = {
-      access_token: process.env.REACT_APP_USER_TOKEN,
-      user_id: "U4ABV446N"
-    };
-    this.fetchUserInfo(user);
-    this.state = {
-      bot: {
-        bot_user_id: "U6CJ3H9MG",
-        bot_access_token: process.env.REACT_APP_BOT_TOKEN
-      },
-      groups: [],
-      authed: true
-    };
+    this.state = { groups: [] };
   }
 
   componentDidMount() {
