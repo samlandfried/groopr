@@ -2,8 +2,7 @@ import React, { Component } from "react";
 
 export default class Notify extends Component {
   render() {
-    const defaultMessage = `You have been assigned to this group from @${this
-      .props.channel} by ${this.props.user}`;
+    const defaultMessage = `You have been assigned to this group by ${this.props.user}`;
     return (
       <div className="notify options">
         <a className="button warning" onClick={this.props.clearGroups}>

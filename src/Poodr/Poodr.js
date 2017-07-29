@@ -17,7 +17,7 @@ export default class Poodr extends Component {
     return (
       <div id={"poodr"}>
         {" "}{this.props.groups.length === 0 &&
-          <div className={"options"}>
+          <div className={"options"} id="initial-options">
             <Options
               token={this.props.bot.bot_access_token}
               makeGroups={this.props.makeGroups}

@@ -9,7 +9,13 @@ export default class Options extends Component {
   render() {
     return (
       <form id="grouping-options">
-        <button id="make-groups" onClick={this.props.makeGroups} className={"btn"}>Make Groups</button>
+        <button
+          id="make-groups"
+          onClick={this.props.makeGroups}
+          className={"btn"}
+        >
+          Make Groups
+        </button>
         <div id="grouping-strategy">
           <h2>Grouping Strategy</h2>
           <select id="grouping-strategy-select">
@@ -42,7 +48,11 @@ export default class Options extends Component {
         </div>
         <div id="channel-search">
           <h2>Choose a Channel or Group</h2>
-          <input type="text" id="channel-search-input" onChange={this.filterChannels}/>
+          <input
+            type="text"
+            id="channel-search-input"
+            onChange={this.filterChannels}
+          />
         </div>
         <div className="channels-and-groups">
           <table id="channels">
@@ -57,8 +67,15 @@ export default class Options extends Component {
                   return (
                     <tr className="channel" key={channel.id}>
                       <td>
-                        <input type="checkbox" name="channel" className="channel check" value={channel.id} />
-                        <label>{channel.name}</label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            name="channel"
+                            className="channel check"
+                            value={channel.id}
+                          />
+                          {channel.name}
+                        </label>
                       </td>
                     </tr>
                   );
@@ -77,8 +94,15 @@ export default class Options extends Component {
                   return (
                     <tr className="usergroup" key={usergroup.id}>
                       <td>
-                        <input type="checkbox" className="usergroup check" name="usergroup" value={usergroup.id} />
-                        <label>{usergroup.name}</label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            className="usergroup check"
+                            name="usergroup"
+                            value={usergroup.id}
+                          />
+                          {usergroup.name}
+                        </label>
                       </td>
                     </tr>
                   );
@@ -115,19 +139,18 @@ export default class Options extends Component {
       .catch(error => console.error(error));
   }
 
-
   filterChannels(event) {
     const query = event.target.value;
-    const trs = document.querySelectorAll('tr.channel,tr.usergroup');
+    const trs = document.querySelectorAll("tr.channel,tr.usergroup");
 
     let name;
-    for(let i = 0; i < trs.length; i ++) {
-      trs[i].style.display = '';
-      name = trs[i].querySelector('label').innerText;
+    for (let i = 0; i < trs.length; i++) {
+      trs[i].style.display = "";
+      name = trs[i].querySelector("label").innerText;
 
-      if(!name.includes(query)) {
-        trs[i].style.display = 'none';
+      if (!name.includes(query)) {
+        trs[i].style.display = "none";
       }
     }
   }
-};
+}
