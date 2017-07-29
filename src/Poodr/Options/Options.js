@@ -6,38 +6,10 @@ export default class Options extends Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    const channelsUrl =
-      "https://slack.com/api/channels.list?token=" + this.props.token;
-    const groupsUrl =
-      "https://slack.com/api/usergroups.list?token=" + this.props.token;
-
-    fetch(channelsUrl)
-      .then(resp => resp.json())
-      .then(data => {
-        this.setState({
-          channels: data.channels
-        });
-      })
-      .catch(error => console.error(error));
-
-    fetch(groupsUrl)
-      .then(resp => resp.json())
-      .then(data => {
-        this.setState({
-          usergroups: data.usergroups
-        });
-      })
-      .catch(error => console.error(error));
-  }
-
-  formVals() {
-    debugger;
-  }
-
   render() {
     return (
       <form id="grouping-options">
+        <button id="make-groups" onClick={this.props.makeGroups} className={"btn"}>Make Groups</button>
         <div id="grouping-strategy">
           <h2>Grouping Strategy</h2>
           <select id="grouping-strategy-select">
@@ -85,12 +57,8 @@ export default class Options extends Component {
                   return (
                     <tr className="channel" key={channel.id}>
                       <td>
-                        <a
-                          onClick={this.props.makeGroups.bind(null, channel.id)}
-                          href="#"
-                        >
-                          {channel.name}
-                        </a>
+                        <input type="checkbox" name="channel" className="channel check" value={channel.id} />
+                        <label>{channel.name}</label>
                       </td>
                     </tr>
                   );
@@ -109,9 +77,8 @@ export default class Options extends Component {
                   return (
                     <tr className="usergroup" key={usergroup.id}>
                       <td>
-                        <a onClick={this.props.makeGroups} href="#">
-                          {usergroup.name}
-                        </a>
+                        <input type="checkbox" className="usergroup check" name="usergroup" value={usergroup.id} />
+                        <label>{usergroup.name}</label>
                       </td>
                     </tr>
                   );
@@ -122,6 +89,32 @@ export default class Options extends Component {
       </form>
     );
   }
+
+  componentDidMount() {
+    const channelsUrl =
+      "https://slack.com/api/channels.list?token=" + this.props.token;
+    const groupsUrl =
+      "https://slack.com/api/usergroups.list?token=" + this.props.token;
+
+    fetch(channelsUrl)
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          channels: data.channels
+        });
+      })
+      .catch(error => console.error(error));
+
+    fetch(groupsUrl)
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          usergroups: data.usergroups
+        });
+      })
+      .catch(error => console.error(error));
+  }
+
 
   filterChannels(event) {
     const query = event.target.value;

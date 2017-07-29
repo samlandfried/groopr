@@ -22,7 +22,7 @@ class App extends Component {
       },
       groups: [],
       authed: true
-    }
+    };
   }
 
   componentDidMount() {
@@ -113,7 +113,7 @@ class App extends Component {
     });
   }
 
-  makeGroups(channel_id) {
+  getFormVals() {
     const form = document.querySelector("#grouping-options");
     const groupingStrategy = form.querySelector("#grouping-strategy-select")
       .value;
@@ -121,54 +121,89 @@ class App extends Component {
     const oddMemberStrategy = document.querySelector(
       'input[name="odd-member-strategy"]:checked'
     ).value;
-    const options = {
+    let channels = document.querySelectorAll('input[name="channel"]:checked');
+    let usergroups = document.querySelectorAll(
+      'input[name="usergroup"]:checked'
+    );
+    channels = nodeListMap(channels, channel => channel.value);
+    usergroups = nodeListMap(usergroups, usergroup => usergroup.value);
+
+    return {
       size: groupSize,
+      channels: channels,
+      usergroups: usergroups,
       oddMemberStrategy: oddMemberStrategy,
       groupingStrategy: groupingStrategy
     };
+  }
 
+  makeGroups(event) {
+    event.preventDefault();
+    const options = this.getFormVals();
     const token = this.state.bot.bot_access_token;
-    const url =
-      "https://slack.com/api/channels.info?token=" +
-      token +
-      "&channel=" +
-      channel_id;
+    const channels = options.channels.map(channel => {
+      const url =
+        "https://slack.com/api/channels.info?token=" +
+        token +
+        "&channel=" +
+        channel;
 
-    const self = this;
-    fetch(url)
-      .then(
-        function(resp) {
-          return resp.json();
-        }.bind(this)
-      )
-      .then(
-        function(data) {
-          const members = data.channel.members;
-          this.setState({ channelName: data.channel.name });
-          const grooprUrl = "https://groopr.herokuapp.com/api/v1/groups";
+      return fetch(url)
+        .then(json)
+        .then(data => data)
+        .catch(error => new Error(error));
+    });
 
-          const body = {
-            method: "POST",
-            headers: new Headers({ "Content-Type": "application/json" }),
-            body: JSON.stringify({ collection: members, options: options })
-          };
+    const usergroups = options.usergroups.map(usergroup => {
+      const url =
+        "https://slack.com/api/usergroups.users.list?token=" +
+        token +
+        "&usergroup=" +
+        usergroup;
 
-          fetch(grooprUrl, body)
-            .then(
-              function(resp) {
-                return resp.json();
-              }.bind(this)
-            )
-            .then(
-              function(data) {
-                this.setState({
-                  groups: data.groups
-                });
-              }.bind(self)
-            )
-            .catch(error => console.error(error));
-        }.bind(this)
-      );
+      return fetch(url)
+        .then(json)
+        .then(data => data)
+        .catch(error => new Error(error));
+    });
+
+    const promises = channels.concat(usergroups);
+    Promise.all(promises).then(channelGroups => {
+      const userIds = channelGroups.reduce((users, channelGroup) => {
+        if (channelGroup.ok) {
+          if (channelGroup.channel) {
+            users = users.concat(channelGroup.channel.members);
+          } else {
+            users = users.concat(channelGroup.users);
+          }
+        } else {
+          users.push(new Error(channelGroup));
+        }
+        return users;
+      }, []);
+
+      const uniqueUserIds = unique(userIds);
+      this.callGroopr(uniqueUserIds, options);
+    });
+  }
+
+  callGroopr(members,options) {
+    const grooprUrl = "https://groopr.herokuapp.com/api/v1/groups";
+
+    const body = {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      body: JSON.stringify({ collection: members, options: options })
+    };
+
+    fetch(grooprUrl, body)
+      .then(json)
+      .then(data => {
+        this.setState({
+          groups: data.groups
+        });
+      })
+      .catch(error => console.error(error));
   }
 }
 
@@ -178,4 +213,30 @@ const getCode = queryString => {
   const firstParam = queryString.split("&")[0];
   const code = firstParam.split("=")[1];
   return code;
+};
+
+const json = response => response.json();
+const status = response => {
+  if (response.ok) {
+    Promise.resolve(response);
+  } else {
+    Promise.reject(response);
+  }
+};
+
+const nodeListMap = (nodeList, cn) => {
+  const newArray = [];
+  for (let i = 0; i < nodeList.length; i++) {
+    newArray.push(cn(nodeList[i]));
+  }
+  return newArray;
+};
+
+const unique = collection => {
+  return collection.reduce((result, ele) => {
+    if (!result.includes(ele)) {
+      result.push(ele);
+    }
+    return result;
+  }, []);
 };
