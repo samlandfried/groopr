@@ -39,11 +39,11 @@ export default class Options extends Component {
           <input
             type="radio"
             name="odd-member-strategy"
-            value="large"
+            value="larger"
             defaultChecked
           />
           Bigger groups <br />
-          <input type="radio" name="odd-member-strategy" value="small" />
+          <input type="radio" name="odd-member-strategy" value="smaller" />
           Smaller groups <br />
         </div>
         <div id="channel-search">

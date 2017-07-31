@@ -98,6 +98,7 @@ export default class App extends Component {
         _.createCookie('authed', 'true', 30)
         _.createCookie('user_id', data.user_id, 30)
         _.createCookie('bot_token', data.bot.bot_access_token, 30)
+        _.createCookie('team_id', data.team_id, 30)
         history.replace("/");
       } else {
         this.logOut();
@@ -108,14 +109,13 @@ export default class App extends Component {
 
   logOut(event) {
     event && event.preventDefault();
-    document.cookie = "authed=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie =
-      "bot-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie =
-      "user-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie =
-      "user-id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    history.replace("/");
+    _.deleteCookie('authed');
+    _.deleteCookie('bot_token');
+    _.deleteCookie('user_token');
+    _.deleteCookie('user_id');
+    _.deleteCookie('team_id');
+
+    history.replace('/')
   }
 
   getFormVals() {
@@ -193,17 +193,18 @@ export default class App extends Component {
   }
 
   callGroopr(members, options) {
-    const grooprUrl = "https://groopr.herokuapp.com/api/v1/groups";
+    const grooprUrl = process.env.REACT_APP_GROOPR_PATH + '/api/v1/groups';
 
     const body = {
       method: "POST",
       headers: new Headers({ "Content-Type": "application/json" }),
-      body: JSON.stringify({ collection: members, options: options })
+      body: JSON.stringify({ collection: members, options: options, client: _.cookies().bot_token })
     };
 
     fetch(grooprUrl, body)
       .then(_.json)
       .then(data => {
+        debugger
         this.setState({
           groups: data.groups
         });
