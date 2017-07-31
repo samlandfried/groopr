@@ -5,21 +5,21 @@ export default class Groups extends Component {
   render() {
     return (
       <div className="groups">
-        {this.props.groups && this.props.groups.map((group, i) => {
-          const groupWidth = group.length < 5 ? 226 : 334;
+        {this.props.groups && this.props.groups.map((group) => {
+          const groupWidth = group.members.length < 5 ? 226 : 334;
           return (
             <div
               className="group"
               style={{ maxWidth: groupWidth }}
-              key={i}
-              data-group_id={i}
+              key={group.id}
+              data-group_id={group.id}
               onDrop={this.props.dropHandler}
               onDragEnter={this.dragEnterHandler}
               onDragOver={this.dragOverHandler}
               onDragLeave={this.dragLeaveHandler}
               onDragExit={this.dragExitHandler}
             >
-              {group.map((member, memberIndex) => {
+              {group.members.map((member, memberIndex) => {
                 if (typeof member === "object") {
                   return (
                     <Member
@@ -29,7 +29,7 @@ export default class Groups extends Component {
                       userName={member.name}
                       image={member.img}
                       enabled={member.enabled}
-                      groupIndex={i}
+                      groupIndex={group.id}
                       memberIndex={memberIndex}
                       key={member.id}
                       clickHandler={this.props.memberClickHandler}

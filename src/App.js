@@ -198,15 +198,14 @@ export default class App extends Component {
     const body = {
       method: "POST",
       headers: new Headers({ "Content-Type": "application/json" }),
-      body: JSON.stringify({ collection: members, options: options, client: _.cookies().bot_token })
+      body: JSON.stringify({ collection: members, options: options, client: _.cookies().team_id })
     };
 
     fetch(grooprUrl, body)
       .then(_.json)
       .then(data => {
-        debugger
         this.setState({
-          groups: data.groups
+          groups: data
         });
       })
       .catch(error => console.error(error));

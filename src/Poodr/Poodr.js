@@ -45,9 +45,9 @@ export default class Poodr extends Component {
 
   componentDidUpdate() {
     this.props.groups.forEach(group => {
-      group.forEach(member => {
-        if (typeof member === "string") {
-          this.fetchMember(member);
+      group.members.forEach(member => {
+        if (!member.id) {
+          this.fetchMember(member.name);
         }
       });
     });
@@ -57,7 +57,6 @@ export default class Poodr extends Component {
     const url = `https://slack.com/api/users.info?token=${_.cookies().user_token}&user=${_.cookies().user_id}&pretty=1`;
 
     fetch(url).then(_.json).then(data => {
-      debugger;
       if (data.ok) {
         const user = data.user.profile;
         this.setState({
@@ -98,9 +97,9 @@ export default class Poodr extends Component {
     const groupsCopy = this.props.groups;
 
     groupsCopy.forEach((group, groupIndex) => {
-      const memberIndex = group.indexOf(u_id);
+      const memberIndex = group.members.findIndex(member => member.name === u_id);
       if (memberIndex > -1) {
-        groupsCopy[groupIndex][memberIndex] = user;
+        groupsCopy[groupIndex].members[memberIndex] = user;
       }
     });
 
@@ -131,12 +130,14 @@ export default class Poodr extends Component {
 
   dropHandler(event) {
     event.preventDefault();
-    const toGroup = event.currentTarget.dataset.group_id;
+    const groups = this.props.groups;
+    const toGroup = _.findGroupIndex(groups, event.currentTarget.dataset.group_id);
     const data = event.dataTransfer.getData("text");
     const dropped = JSON.parse(data);
-    const groups = this.props.groups;
-    const member = this.pluckMemberFromGroup(dropped.u_id, groups[dropped.fromGroup]);
-    groups[toGroup].push(member);
+    const index = _.findGroupIndex(groups, dropped.fromGroup);
+    const member = this.pluckMemberFromGroup(dropped.u_id, groups[index]);
+
+    groups[toGroup].members.push(member);
     this.props.groupsChanger(groups);
   }
 
@@ -151,7 +152,7 @@ export default class Poodr extends Component {
     // When it's just one user, this needs to be a DM w/ the bot. Different endpoint for DMs
     const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
     groups.forEach(group => {
-      const membersToMessage = group.reduce((group, member) => {
+      const membersToMessage = group.members.reduce((group, member) => {
         if(member.enabled) {
           group.push(member.id);
         }
@@ -221,9 +222,9 @@ export default class Poodr extends Component {
   }
 
   pluckMemberFromGroup(u_id, group) {
-    const i = group.findIndex(member => {
+    const i = group.members.findIndex(member => {
       return member.id === u_id
     });
-    return group.splice(i, 1)[0];
+    return group.members.splice(i, 1)[0];
   }
 }

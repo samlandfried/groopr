@@ -1,4 +1,8 @@
 module.exports = {
+    findGroupIndex: (groups, g_id) => {
+      return groups.findIndex(group => group.id == g_id)
+    },
+
     json: response => response.json(),
 
     status: response => {
