@@ -44,6 +44,7 @@ export default class Poodr extends Component {
   }
 
   componentDidUpdate() {
+    if(!Array.isArray(this.props.groups)) {return}
     this.props.groups.forEach(group => {
       group.members.forEach(member => {
         if (!member.id) {
@@ -107,11 +108,11 @@ export default class Poodr extends Component {
   }
 
   memberClickHandler(event) {
-    const data = event.currentTarget.dataset;
-    const groupIndex = data.groupindex;
-    const memberIndex = data.memberindex;
     const groups = this.props.groups;
-    const member = groups[groupIndex][memberIndex];
+    const data = event.currentTarget.dataset;
+    const memberIndex = data.memberindex;
+    const groupIndex = _.findGroupIndex(groups, data.groupindex);
+    const member = groups[groupIndex].members[memberIndex];
 
     member.enabled = !member.enabled
     this.props.groupsChanger(groups)
