@@ -146,6 +146,7 @@ export default class App extends Component {
     event.preventDefault();
     const options = this.getFormVals();
     const token = _.cookies().bot_token;
+
     const channels = options.channels.map(channel => {
       const url =
         "https://slack.com/api/channels.info?token=" +
