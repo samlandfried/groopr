@@ -63,19 +63,27 @@ export default class Options extends Component {
             </thead>
             <tbody>
               {this.state.channels &&
-                this.state.channels.map(channel => {
+                this.state.channels.map((channel, i) => {
                   return (
                     <tr className="channel" key={channel.id}>
                       <td>
-                        <label>
-                          <input
-                            type="checkbox"
-                            name="channel"
-                            className="channel check"
-                            value={channel.id}
-                          />
-                          {channel.name}
-                        </label>
+                        <div className="field">
+                          <label onClick={this.toggleCheck}>
+                            <input
+                              aria-setsize={this.state.channels.length}
+                              aria-posinset={i + 1}
+                              aria-labelledby={"check-label-" + (i + 1)}
+                              aria-checked="false"
+                              tabindex="0"
+                              role="checkbox"
+                              type="checkbox"
+                              name="channel"
+                              className="channel check"
+                              value={channel.id}
+                            />
+                            {channel.name}
+                          </label>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -90,19 +98,27 @@ export default class Options extends Component {
             </thead>
             <tbody>
               {this.state.usergroups &&
-                this.state.usergroups.map(usergroup => {
+                this.state.usergroups.map((usergroup, i) => {
                   return (
                     <tr className="usergroup" key={usergroup.id}>
                       <td>
-                        <label>
-                          <input
-                            type="checkbox"
-                            className="usergroup check"
-                            name="usergroup"
-                            value={usergroup.id}
-                          />
-                          {usergroup.name}
-                        </label>
+                        <div className="field">
+                          <label >
+                            <input
+                              aria-setsize={this.state.usergroups.length}
+                              aria-posinset={i + 1}
+                              aria-labelledby={"check-label-" + (i + 1)}
+                              aria-checked="false"
+                              tabindex="0"
+                              role="checkbox"
+                              type="checkbox"
+                              className="usergroup check"
+                              name="usergroup"
+                              value={usergroup.id}
+                            />
+                            {usergroup.name}
+                          </label>
+                        </div>
                       </td>
                     </tr>
                   );
@@ -137,6 +153,13 @@ export default class Options extends Component {
         });
       })
       .catch(error => console.error(error));
+  }
+
+  toggleCheck(event) {
+    const input = event.currentTarget.querySelector('input');
+    const currentVal = input.getAttribute('aria-checked');
+    const newVal = (currentVal === 'false' ? 'true' : 'false');
+    input.setAttribute('aria-checked', newVal);
   }
 
   filterChannels(event) {
