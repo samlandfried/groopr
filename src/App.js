@@ -26,11 +26,6 @@ export default class App extends Component {
     return (
       <div id="App">
         <section className="navbar">
-          <a href="https://github.com/samlandfried/poodr-react">
-            <div className="brand button" id="navbar-brand">
-              Poodr on GitHub
-            </div>
-          </a>
           {!_.cookies().authed && <AddToSlack />}
           {_.cookies().authed &&
             this.state.user &&
