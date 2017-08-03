@@ -91,11 +91,6 @@ export default class Options extends Component {
             </tbody>
           </table>
           <table id="usergroups">
-            <thead>
-              <tr>
-                <th>Group Name</th>
-              </tr>
-            </thead>
             <tbody>
               {this.state.usergroups &&
                 this.state.usergroups.map((usergroup, i) => {
