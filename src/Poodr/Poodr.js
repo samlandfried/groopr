@@ -55,26 +55,6 @@ export default class Poodr extends Component {
     });
   }
 
-  fetchUserInfo() {
-    const url = `https://slack.com/api/users.info?token=${_.cookies().user_token}&user=${_.cookies().user_id}&pretty=1`;
-
-    fetch(url).then(_.json).then(data => {
-      if (data.ok) {
-        const user = data.user.profile;
-        this.setState({
-          user: {
-            name: user.real_name,
-            image: user.image_48
-          }
-        });
-      } else {
-        this.logOut();
-        console.error(new Error(data));
-      }
-    });
-  }
-
-
   fetchMember(u_id) {
     const url = `https://slack.com/api/users.info?token=${this.props.botToken}&user=${u_id}&pretty=1`;
     fetch(url)

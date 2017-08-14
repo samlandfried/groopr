@@ -142,7 +142,7 @@ export default class App extends Component {
   makeGroups(event) {
     event.preventDefault();
     const options = this.getFormVals();
-    const token = _.cookies().bot_token;
+    const token = _.cookies().user_token;
 
     const channels = options.channels.map(channel => {
       const url =
