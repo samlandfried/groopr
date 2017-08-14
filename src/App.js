@@ -44,6 +44,7 @@ export default class App extends Component {
             <Poodr
               user={this.state.user}
               botToken={_.cookies().bot_token}
+              userToken={_.cookies().user_token}
               groups={this.state.groups}
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
@@ -92,6 +93,7 @@ export default class App extends Component {
       if (data.ok) {
         _.createCookie('authed', 'true', 30)
         _.createCookie('user_id', data.user_id, 30)
+        _.createCookie('user_token', data.access_token, 30)
         _.createCookie('bot_token', data.bot.bot_access_token, 30)
         _.createCookie('team_id', data.team_id, 30)
         history.replace("/");

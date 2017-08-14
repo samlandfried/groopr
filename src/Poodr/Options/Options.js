@@ -47,7 +47,7 @@ export default class Options extends Component {
           Smaller groups <br />
         </div>
         <div id="channel-search">
-          <h2>Choose a Channel or Group</h2>
+          <h2>Choose Channels and Usergroups</h2>
           <input
             type="text"
             id="channel-search-input"
@@ -74,7 +74,7 @@ export default class Options extends Component {
                               aria-posinset={i + 1}
                               aria-labelledby={"check-label-" + (i + 1)}
                               aria-checked="false"
-                              tabindex="0"
+                              tabIndex="0"
                               role="checkbox"
                               type="checkbox"
                               name="channel"
@@ -91,6 +91,11 @@ export default class Options extends Component {
             </tbody>
           </table>
           <table id="usergroups">
+            <thead>
+              <tr>
+                <th>Usergroup Name</th>
+              </tr>
+            </thead>
             <tbody>
               {this.state.usergroups &&
                 this.state.usergroups.map((usergroup, i) => {
@@ -104,7 +109,7 @@ export default class Options extends Component {
                               aria-posinset={i + 1}
                               aria-labelledby={"check-label-" + (i + 1)}
                               aria-checked="false"
-                              tabindex="0"
+                              tabIndex="0"
                               role="checkbox"
                               type="checkbox"
                               className="usergroup check"
@@ -127,9 +132,9 @@ export default class Options extends Component {
 
   componentDidMount() {
     const channelsUrl =
-      "https://slack.com/api/channels.list?token=" + this.props.token;
+      "https://slack.com/api/channels.list?token=" + this.props.botToken;
     const groupsUrl =
-      "https://slack.com/api/usergroups.list?token=" + this.props.token;
+      "https://slack.com/api/usergroups.list?token=" + this.props.userToken;
 
     fetch(channelsUrl)
       .then(resp => resp.json())
