@@ -10,7 +10,6 @@ export default class Groups extends Component {
           return (
             <div
               className="group"
-              style={{ maxWidth: groupWidth }}
               key={group.id}
               data-group_id={group.id}
               onDrop={this.props.dropHandler}

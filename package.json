@@ -10,6 +10,7 @@
     "node-fetch": "^1.7.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-materialize": "^1.0.8",
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
     "react-url-query": "^1.2.0",

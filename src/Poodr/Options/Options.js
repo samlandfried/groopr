@@ -132,9 +132,9 @@ export default class Options extends Component {
 
   componentDidMount() {
     const channelsUrl =
-      "https://slack.com/api/channels.list?token=" + this.props.botToken;
+      "https://slack.com/api/channels.list?exclude_archived=true&exclude_members=true&token=" + this.props.botToken;
     const groupsUrl =
-      "https://slack.com/api/usergroups.list?token=" + this.props.userToken;
+      "https://slack.com/api/usergroups.list?exclude_archived=true&exclude_members=true&token=" + this.props.userToken;
 
     fetch(channelsUrl)
       .then(resp => resp.json())

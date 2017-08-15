@@ -61,8 +61,11 @@ body {
 }
 
 .options {
-  width: 300px;
   margin: 15px auto;
+}
+
+.notify {
+  width:  300px;
 }
 
 .group {
@@ -83,6 +86,7 @@ body {
   font-size: 16px;
 }
 
+.options button,
 .options select,
 .options input {
   border-style: none;
@@ -105,11 +109,6 @@ input[type="checkbox"] {
 
 .channels-and-groups table {
   margin: 0px 8px;
-  min-width: 200px;
-}
-
-#initial-options {
-  min-width: 400px;
 }
 
 .group {
