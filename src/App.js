@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { Button, Navbar, NavItem } from "react-materialize";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
 import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
 import history from "./history";
-import _ from "./funcs"
+import _ from "./funcs";
 
 export default class App extends Component {
   constructor() {
@@ -25,21 +26,37 @@ export default class App extends Component {
   render() {
     return (
       <div id="App">
-        <section className="navbar">
-          {!_.cookies().authed && <AddToSlack />}
-          {_.cookies().authed &&
-            this.state.user &&
-            <div className="user-authed">
-              <UserInfo user={this.state.user} />
-              <input
-                type="submit"
-                value="Logout"
-                className="button"
-                onClick={this.logOut}
-              />
-            </div>}
-        </section>
+        <nav>
+          <div className="nav-wrapper">
+            <h1>Groopr</h1>{" "}
+            {_.cookies().authed &&
+              this.state.user &&
+              <div className="user-authed">
+                <UserInfo user={this.state.user} />{" "}
+                <input
+                  type="submit"
+                  value="Logout"
+                  className="button"
+                  onClick={this.logOut}
+                />{" "}
+              </div>}{" "}
+          </div>
+        </nav>
         <section className="main">
+          {" "}{!_.cookies().authed &&
+            <div className="landing">
+              <p id="landing-blurb">
+                Groopr quickly and intelligently assigns members of your Slack
+                team into groups so they can focus on working instead of, well,
+                grouping.
+              </p>
+              <AddToSlack />
+              <p>or read about everything Groopr can do</p>
+              <a className="btn" href="#">
+                <img src={require("./img/Octocat.png")} height="30px" /> on{" "}
+                <strong>Github</strong>
+              </a>
+            </div>}{" "}
           {_.cookies().authed &&
             <Poodr
               user={this.state.user}
@@ -50,7 +67,8 @@ export default class App extends Component {
               groupsChanger={this.groupsChanger.bind(this)}
               clearGroups={this.clearGroups.bind(this)}
             />}
-        </section>
+          }{" "}
+        </section>{" "}
       </div>
     );
   }
@@ -91,11 +109,11 @@ export default class App extends Component {
       .REACT_APP_SLACK_CALLBACK}&pretty=1`;
     fetch(url).then(_.json).then(data => {
       if (data.ok) {
-        _.createCookie('authed', 'true', 30)
-        _.createCookie('user_id', data.user_id, 30)
-        _.createCookie('user_token', data.access_token, 30)
-        _.createCookie('bot_token', data.bot.bot_access_token, 30)
-        _.createCookie('team_id', data.team_id, 30)
+        _.createCookie("authed", "true", 30);
+        _.createCookie("user_id", data.user_id, 30);
+        _.createCookie("user_token", data.access_token, 30);
+        _.createCookie("bot_token", data.bot.bot_access_token, 30);
+        _.createCookie("team_id", data.team_id, 30);
         history.replace("/");
       } else {
         this.logOut();
@@ -106,13 +124,13 @@ export default class App extends Component {
 
   logOut(event) {
     event && event.preventDefault();
-    _.deleteCookie('authed');
-    _.deleteCookie('bot_token');
-    _.deleteCookie('user_token');
-    _.deleteCookie('user_id');
-    _.deleteCookie('team_id');
+    _.deleteCookie("authed");
+    _.deleteCookie("bot_token");
+    _.deleteCookie("user_token");
+    _.deleteCookie("user_id");
+    _.deleteCookie("team_id");
 
-    history.replace('/')
+    history.replace("/");
   }
 
   getFormVals() {
@@ -191,12 +209,16 @@ export default class App extends Component {
   }
 
   callGroopr(members, options) {
-    const grooprUrl = process.env.REACT_APP_GROOPR_PATH + '/api/v1/groups';
+    const grooprUrl = process.env.REACT_APP_GROOPR_PATH + "/api/v1/groups";
 
     const body = {
       method: "POST",
       headers: new Headers({ "Content-Type": "application/json" }),
-      body: JSON.stringify({ collection: members, options: options, client: _.cookies().team_id })
+      body: JSON.stringify({
+        collection: members,
+        options: options,
+        client: _.cookies().team_id
+      })
     };
 
     fetch(grooprUrl, body)
