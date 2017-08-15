@@ -28,6 +28,7 @@ export default class App extends Component {
       <div id="App">
         <nav>
           <div className="nav-wrapper">
+            <img src={require("./img/groopr-logo.png")} alt="Groopr logo" className="logo"/>
             <h1>Groopr</h1>{" "}
             {_.cookies().authed &&
               this.state.user &&
@@ -46,14 +47,14 @@ export default class App extends Component {
           {" "}{!_.cookies().authed &&
             <div className="landing">
               <p id="landing-blurb">
-                Groopr quickly and intelligently assigns members of your Slack
+                Groopr intelligently assigns members of your Slack
                 team into groups so they can focus on working instead of, well,
                 grouping.
               </p>
               <AddToSlack />
               <p>or read about everything Groopr can do</p>
               <a className="btn" href="#">
-                <img src={require("./img/Octocat.png")} height="30px" /> on{" "}
+                <img src={require("./img/Octocat.png")} alt="GitHub OctoCat logo" height="30px" /> on{" "}
                 <strong>Github</strong>
               </a>
             </div>}{" "}
