@@ -3,7 +3,7 @@ import Options from "./Options/Options";
 import Groups from "./Groups/Groups";
 import Notify from "./Notify/Notify";
 import history from "./../history";
-import _ from './../funcs';
+import _ from "./../funcs";
 
 export default class Poodr extends Component {
   constructor() {
@@ -45,7 +45,9 @@ export default class Poodr extends Component {
   }
 
   componentDidUpdate() {
-    if(!Array.isArray(this.props.groups)) {return}
+    if (!Array.isArray(this.props.groups)) {
+      return;
+    }
     this.props.groups.forEach(group => {
       group.members.forEach(member => {
         if (!member.id) {
@@ -56,7 +58,8 @@ export default class Poodr extends Component {
   }
 
   fetchMember(u_id) {
-    const url = `https://slack.com/api/users.info?token=${this.props.botToken}&user=${u_id}&pretty=1`;
+    const url = `https://slack.com/api/users.info?token=${this.props
+      .botToken}&user=${u_id}&pretty=1`;
     fetch(url)
       .then(_.json)
       .then(data => {
@@ -66,7 +69,7 @@ export default class Poodr extends Component {
           enabled: true,
           id: id,
           name: deets.real_name,
-          img: deets.image_192
+          img: deets.image_72
         };
 
         this.mapGroup(user);
@@ -79,7 +82,9 @@ export default class Poodr extends Component {
     const groupsCopy = this.props.groups;
 
     groupsCopy.forEach((group, groupIndex) => {
-      const memberIndex = group.members.findIndex(member => member.name === u_id);
+      const memberIndex = group.members.findIndex(
+        member => member.name === u_id
+      );
       if (memberIndex > -1) {
         groupsCopy[groupIndex].members[memberIndex] = user;
       }
@@ -95,25 +100,36 @@ export default class Poodr extends Component {
     const groupIndex = _.findGroupIndex(groups, data.groupindex);
     const member = groups[groupIndex].members[memberIndex];
 
-    member.enabled = !member.enabled
-    this.props.groupsChanger(groups)
+    member.enabled = !member.enabled;
+    this.props.groupsChanger(groups);
+    this.toggleMemberBackgroundColor(event.currentTarget);
+  }
+
+  toggleMemberBackgroundColor(ele) {
+    if (ele.style.backgroundColor === 'red') {
+      ele.style.backgroundColor = '';
+    } else {
+      ele.style.backgroundColor = 'red';
+    }
   }
 
   dragStartHandler(event) {
-    const img = event.currentTarget.querySelector("img");
+    const img = event.currentTarget;
     const dataToSend = {
       u_id: event.currentTarget.dataset.u_id,
       fromGroup: event.currentTarget.dataset.groupindex
     };
     event.dataTransfer.setDragImage(img, 45, 45);
-    event.dataTransfer.dropEffect = "move";
     event.dataTransfer.setData("text", JSON.stringify(dataToSend));
   }
 
   dropHandler(event) {
     event.preventDefault();
     const groups = this.props.groups;
-    const toGroup = _.findGroupIndex(groups, event.currentTarget.dataset.group_id);
+    const toGroup = _.findGroupIndex(
+      groups,
+      event.currentTarget.dataset.group_id
+    );
     const data = event.dataTransfer.getData("text");
     const dropped = JSON.parse(data);
     const index = _.findGroupIndex(groups, dropped.fromGroup);
@@ -135,11 +151,11 @@ export default class Poodr extends Component {
     const url = `https://slack.com/api/mpim.open?token=${token}&users=`;
     groups.forEach(group => {
       const membersToMessage = group.members.reduce((group, member) => {
-        if(member.enabled) {
+        if (member.enabled) {
           group.push(member.id);
         }
         return group;
-      }, new Array);
+      }, new Array());
 
       const users = membersToMessage.join(",");
 
@@ -164,11 +180,13 @@ export default class Poodr extends Component {
 
   sendConfirmation(groups) {
     const msg = this.buildMessage(groups);
-    let url = `https://slack.com/api/im.open?token=${this.props.botToken}&user=${_.cookies().user_id}&pretty=1`;
+    let url = `https://slack.com/api/im.open?token=${this.props
+      .botToken}&user=${_.cookies().user_id}&pretty=1`;
     fetch(url).then(_.json).then(data => {
       if (data.ok) {
         const c_id = data.channel.id;
-        url = `https://slack.com/api/chat.postMessage?token=${this.props.botToken}&channel=${c_id}&text=${msg}&pretty=1`;
+        url = `https://slack.com/api/chat.postMessage?token=${this.props
+          .botToken}&channel=${c_id}&text=${msg}&pretty=1`;
         fetch(url).then(_.json).then(data => {
           if (!data.ok) {
             console.error(data.error);
@@ -193,7 +211,7 @@ export default class Poodr extends Component {
       group = groups[groupIndex].querySelectorAll(".member");
       for (let memberIndex = 0; memberIndex < group.length; memberIndex++) {
         member = group[memberIndex];
-        if(member.dataset.enabled === 'true') {
+        if (member.dataset.enabled === "true") {
           msg += "\n - " + member.querySelector("h6").innerText;
         }
       }
@@ -205,7 +223,7 @@ export default class Poodr extends Component {
 
   pluckMemberFromGroup(u_id, group) {
     const i = group.members.findIndex(member => {
-      return member.id === u_id
+      return member.id === u_id;
     });
     return group.members.splice(i, 1)[0];
   }

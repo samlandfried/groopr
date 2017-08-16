@@ -23,7 +23,7 @@ export default class Options extends Component {
                 <option value="perfect" disabled>
                   Perfect
                 </option>
-                <option value="recommended" selected>
+                <option value="recommended">
                   Recommended
                 </option>
                 <option value="random">Random</option>
