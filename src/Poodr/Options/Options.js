@@ -19,7 +19,7 @@ export default class Options extends Component {
             <Row className="group-strategy-and-size">
               <div className="strategy">
               <h3 className="options-label">Grouping Strategy</h3>
-              <Input s={12} type="select" defaultValue="recommended">
+              <Input id="grouping-strategy-select" s={12} type="select" defaultValue="recommended">
                 <option value="perfect" disabled>
                   Perfect
                 </option>
@@ -31,7 +31,7 @@ export default class Options extends Component {
               </div>
               <div classname="size">
               <h3 className="options-label">Group Size</h3>
-              <Input s={12} type="select" defaultValue="2">
+              <Input id="group-size-select" s={12} type="select" defaultValue="2">
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
