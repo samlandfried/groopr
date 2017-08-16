@@ -10,6 +10,10 @@ body {
   background-size: cover;
 }
 
+button {
+  margin: 12px;
+}
+
 .nav-wrapper {
   padding: 0;
   margin: 0;
@@ -104,6 +108,10 @@ input {
   justify-content: space-between;
 }
 
+.size {
+  margin-left: 8px
+}
+
 .input-field {
   margin: 0;
 }
@@ -128,6 +136,11 @@ th {
 
 td {
   padding: 0;
+}
+
+.notify {
+  display: flex;
+  justify-content: center;
 }
 
 .groups {
@@ -171,8 +184,4 @@ td {
 
 .member img {
   border-radius: 3px;
-}
-
-.card-content {
-  padding: 0 !important;
 }

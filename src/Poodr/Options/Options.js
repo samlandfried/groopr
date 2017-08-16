@@ -18,27 +18,35 @@ export default class Options extends Component {
             </Button>
             <Row className="group-strategy-and-size">
               <div className="strategy">
-              <h3 className="options-label">Grouping Strategy</h3>
-              <Input id="grouping-strategy-select" s={12} type="select" defaultValue="recommended">
-                <option value="perfect" disabled>
-                  Perfect
-                </option>
-                <option value="recommended">
-                  Recommended
-                </option>
-                <option value="random">Random</option>
-              </Input>
+                <h3 className="options-label">Grouping Strategy</h3>
+                <Input
+                  id="grouping-strategy-select"
+                  s={12}
+                  type="select"
+                  defaultValue="recommended"
+                >
+                  <option value="perfect" disabled>
+                    Perfect
+                  </option>
+                  <option value="recommended">Recommended</option>
+                  <option value="random">Random</option>
+                </Input>
               </div>
-              <div classname="size">
-              <h3 className="options-label">Group Size</h3>
-              <Input id="group-size-select" s={12} type="select" defaultValue="2">
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-              </Input>
+              <div className="size">
+                <h3 className="options-label">Group Size</h3>
+                <Input
+                  id="group-size-select"
+                  s={12}
+                  type="select"
+                  defaultValue="2"
+                >
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                </Input>
               </div>
             </Row>
             <Row>
