@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Button, Navbar, NavItem } from "react-materialize";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
-import "./App.css";
 import AddToSlack from "./AddToSlack/AddToSlack";
 import history from "./history";
 import _ from "./funcs";
@@ -28,12 +27,13 @@ export default class App extends Component {
       <div id="App">
         <nav>
           <div className="nav-wrapper">
-            <img src={require("./img/groopr-logo.png")} alt="Groopr logo" className="logo"/>
-            <h1>Groopr</h1>{" "}
+            <div className="logo">
+              <img src={require("./img/groopr-logo.png")} alt="Groopr logo" />
+              <h1>Groopr</h1>
+            </div>
             {_.cookies().authed &&
               this.state.user &&
-                <UserInfo user={this.state.user} logout={this.logOut}/>
-              }
+              <UserInfo user={this.state.user} logout={this.logOut} />}
           </div>
         </nav>
         <section className="main">
@@ -47,8 +47,12 @@ export default class App extends Component {
               <AddToSlack />
               <p>or read about everything Groopr can do</p>
               <a className="btn" href="#">
-                <img src={require("./img/Octocat.png")} alt="GitHub OctoCat logo" height="30px" /> on{" "}
-                <strong>GitHub</strong>
+                <img
+                  src={require("./img/Octocat.png")}
+                  alt="GitHub OctoCat logo"
+                  height="30px"
+                />{" "}
+                on <strong>GitHub</strong>
               </a>
             </div>}{" "}
           {_.cookies().authed &&
