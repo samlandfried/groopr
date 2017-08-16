@@ -30,7 +30,7 @@ nav h1 {
 
 .logo img {
   height: 50px;
-  margin: 25px;
+  margin-right: 25px;
 }
 
 .logout {
@@ -92,4 +92,39 @@ nav h1 {
 
 strong {
   font-weight: bold;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+}
+
+.group-strategy-and-size {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-field {
+  margin: 0;
+}
+
+.channels-and-groups {
+  display: flex;
+}
+
+.options-label {
+  font-size: 22px;
+  margin: 22px 0;
+}
+
+#channels, #usergroups {
+  width: 0;
+}
+
+th {
+  padding: 0;
+}
+
+td {
+  padding: 0;
 }

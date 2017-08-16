@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Button, Navbar, NavItem } from "react-materialize";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
-import Landing from "./Landing/Landing"
+import Landing from "./Landing/Landing";
+import $ from "jquery";
 import history from "./history";
 import _ from "./funcs";
 

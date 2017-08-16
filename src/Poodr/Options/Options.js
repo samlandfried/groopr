@@ -11,18 +11,15 @@ export default class Options extends Component {
   render() {
     return (
       <Col m={6} s={12}>
-        <Card className="light-blue lighten-4">
+        <Card className="white">
           <form id="grouping-options">
             <Button id="make-groups" onClick={this.props.makeGroups}>
               Make Groups
             </Button>
-            <Row>
-              <Input
-                s={12}
-                type="select"
-                label="Grouping Strategy"
-                defaultValue="recommended"
-              >
+            <Row className="group-strategy-and-size">
+              <div className="strategy">
+              <h3 className="options-label">Grouping Strategy</h3>
+              <Input s={12} type="select" defaultValue="recommended">
                 <option value="perfect" disabled>
                   Perfect
                 </option>
@@ -31,14 +28,10 @@ export default class Options extends Component {
                 </option>
                 <option value="random">Random</option>
               </Input>
-            </Row>
-            <Row>
-              <Input
-                s={12}
-                type="select"
-                label="Group Size"
-                defaultValue="2"
-              >
+              </div>
+              <div classname="size">
+              <h3 className="options-label">Group Size</h3>
+              <Input s={12} type="select" defaultValue="2">
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -46,20 +39,36 @@ export default class Options extends Component {
                 <option value="6">6</option>
                 <option value="7">7</option>
               </Input>
+              </div>
             </Row>
             <Row>
-              <Input name="odd-member-strategy" type="radio" value="larger" label="Larger Groups" className="with-gap" checked/>
-              <Input name="odd-member-strategy" type="radio" value="smaller" label="Smaller Groups" className="with-gap" />
+              <h3 className="options-label">Odd Member Strategy</h3>
+              <Input
+                name="odd-member-strategy"
+                type="radio"
+                value="larger"
+                label="Larger Groups"
+                className="with-gap"
+                checked
+              />
+              <Input
+                name="odd-member-strategy"
+                type="radio"
+                value="smaller"
+                label="Smaller Groups"
+                className="with-gap"
+              />
             </Row>
-            <div id="channel-search">
-              <h2>Choose Channels and Usergroups</h2>
-              <input
-                type="text"
+            <Row>
+              <h3 className="options-label">Choose Channels and Usergroups</h3>
+              <Input
+                s={12}
+                label="Filter channels and usergroups"
                 id="channel-search-input"
                 onChange={this.filterChannels}
               />
-            </div>
-            <div className="channels-and-groups">
+            </Row>
+            <Row className="channels-and-groups">
               <table id="channels">
                 <thead>
                   <tr>
@@ -72,23 +81,19 @@ export default class Options extends Component {
                       return (
                         <tr className="channel" key={channel.id}>
                           <td>
-                            <div className="field">
-                              <label onClick={this.toggleCheck}>
-                                <input
-                                  aria-setsize={this.state.channels.length}
-                                  aria-posinset={i + 1}
-                                  aria-labelledby={"check-label-" + (i + 1)}
-                                  aria-checked="false"
-                                  tabIndex="0"
-                                  role="checkbox"
-                                  type="checkbox"
-                                  name="channel"
-                                  className="channel check"
-                                  value={channel.id}
-                                />
-                                {channel.name}
-                              </label>
-                            </div>
+                            <Input
+                              name="channel"
+                              type="checkbox"
+                              value={channel.id}
+                              label={channel.name}
+                              aria-setsize={this.state.channels.length}
+                              aria-posinset={i + 1}
+                              aria-labelledby={"check-label-" + (i + 1)}
+                              aria-checked="false"
+                              tabIndex="0"
+                              role="checkbox"
+                              onClick={this.toggleCheck}
+                            />
                           </td>
                         </tr>
                       );
@@ -107,30 +112,26 @@ export default class Options extends Component {
                       return (
                         <tr className="usergroup" key={usergroup.id}>
                           <td>
-                            <div className="field">
-                              <label>
-                                <input
-                                  aria-setsize={this.state.usergroups.length}
-                                  aria-posinset={i + 1}
-                                  aria-labelledby={"check-label-" + (i + 1)}
-                                  aria-checked="false"
-                                  tabIndex="0"
-                                  role="checkbox"
-                                  type="checkbox"
-                                  className="usergroup check"
-                                  name="usergroup"
-                                  value={usergroup.id}
-                                />
-                                {usergroup.name}
-                              </label>
-                            </div>
+                            <Input
+                              name="usergroup"
+                              type="checkbox"
+                              value={usergroup.id}
+                              label={usergroup.name}
+                              aria-setsize={this.state.usergroups.length}
+                              aria-posinset={i + 1}
+                              aria-labelledby={"check-label-" + (i + 1)}
+                              aria-checked="false"
+                              tabIndex="0"
+                              role="checkbox"
+                              onClick={this.toggleCheck}
+                            />
                           </td>
                         </tr>
                       );
                     })}
                 </tbody>
               </table>
-            </div>
+            </Row>
           </form>
         </Card>
       </Col>
@@ -169,7 +170,7 @@ export default class Options extends Component {
   }
 
   toggleCheck(event) {
-    const input = event.currentTarget.querySelector("input");
+    const input = event.currentTarget;
     const currentVal = input.getAttribute("aria-checked");
     const newVal = currentVal === "false" ? "true" : "false";
     input.setAttribute("aria-checked", newVal);
