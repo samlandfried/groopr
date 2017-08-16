@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Navbar, NavItem } from "react-materialize";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
-import AddToSlack from "./AddToSlack/AddToSlack";
+import Landing from "./Landing/Landing"
 import history from "./history";
 import _ from "./funcs";
 
@@ -37,24 +37,7 @@ export default class App extends Component {
           </div>
         </nav>
         <section className="main">
-          {" "}{!_.cookies().authed &&
-            <div className="landing">
-              <p id="landing-blurb">
-                Groopr quickly and intelligently assigns members of your Slack
-                team into groups so they can focus on working instead of, well,
-                grouping.
-              </p>
-              <AddToSlack />
-              <p>or read about everything Groopr can do</p>
-              <a className="btn" href="#">
-                <img
-                  src={require("./img/Octocat.png")}
-                  alt="GitHub OctoCat logo"
-                  height="30px"
-                />{" "}
-                on <strong>GitHub</strong>
-              </a>
-            </div>}{" "}
+          {" "}{!_.cookies().authed && <Landing />}
           {_.cookies().authed &&
             <Poodr
               user={this.state.user}
