@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button, Navbar, NavItem } from "react-materialize";
 import Poodr from "./Poodr/Poodr";
 import UserInfo from "./UserInfo/UserInfo";
-import "./App.css";
-import AddToSlack from "./AddToSlack/AddToSlack";
+import Landing from "./Landing/Landing";
+import $ from "jquery";
 import history from "./history";
 import _ from "./funcs";
 
@@ -28,36 +28,17 @@ export default class App extends Component {
       <div id="App">
         <nav>
           <div className="nav-wrapper">
-            <img src={require("./img/groopr-logo.png")} alt="Groopr logo" className="logo"/>
-            <h1>Groopr</h1>{" "}
+            <div className="logo">
+              <img src={require("./img/groopr-logo.png")} alt="Groopr logo" />
+              <h1>Groopr</h1>
+            </div>
             {_.cookies().authed &&
               this.state.user &&
-              <div className="user-authed">
-                <UserInfo user={this.state.user} />{" "}
-                <input
-                  type="submit"
-                  value="Logout"
-                  className="button"
-                  onClick={this.logOut}
-                />{" "}
-              </div>}{" "}
+              <UserInfo user={this.state.user} logout={this.logOut} />}
           </div>
         </nav>
         <section className="main">
-          {" "}{!_.cookies().authed &&
-            <div className="landing">
-              <p id="landing-blurb">
-                Groopr intelligently assigns members of your Slack
-                team into groups so they can focus on working instead of, well,
-                grouping.
-              </p>
-              <AddToSlack />
-              <p>or read about everything Groopr can do</p>
-              <a className="btn" href="#">
-                <img src={require("./img/Octocat.png")} alt="GitHub OctoCat logo" height="30px" /> on{" "}
-                <strong>Github</strong>
-              </a>
-            </div>}{" "}
+          {" "}{!_.cookies().authed && <Landing />}
           {_.cookies().authed &&
             <Poodr
               user={this.state.user}

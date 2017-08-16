@@ -8,19 +8,17 @@ export default class Member extends Component {
         onClick={this.props.clickHandler}
         draggable={this.props.enabled}
         onDragStart={this.props.dragStartHandler}
-        className={"member " + (this.props.enabled ? 'enabled' : 'disabled')}
+        className={
+          "card member " + (this.props.enabled ? "enabled" : "disabled")
+        }
         data-u_id={this.props.u_id}
         data-groupIndex={this.props.groupIndex}
         data-memberIndex={this.props.memberIndex}
       >
-        <div className="member-info">
-          <h6 draggable={this.props.enabled}>
-            {this.props.userName}
-          </h6>
-          <div className="member-img">
-            <img src={this.props.image} draggable={this.props.enabled} />
-          </div>
-        </div>
+        <h6 draggable={this.props.enabled}>
+          {this.props.userName}
+        </h6>
+        <img src={this.props.image} draggable={this.props.enabled} />
       </div>
     );
   }

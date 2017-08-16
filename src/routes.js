@@ -1,9 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import App from './App';
-import Poodr from './Poodr/Poodr'
-import Options from './Poodr/Options/Options'
-// import Home from './Home/Home';
 import Callback from './Callback/Callback';
 import history from './history';
 
