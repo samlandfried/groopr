@@ -6,7 +6,7 @@ export default class UserInfo extends Component {
     return (
       <Button className="logout" onClick={this.props.logout}>
         <img src={this.props.user.image} />
-        Logout
+        <p>Logout</p>
       </Button>
     );
   }

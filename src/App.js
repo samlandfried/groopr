@@ -48,7 +48,7 @@ export default class App extends Component {
               <p>or read about everything Groopr can do</p>
               <a className="btn" href="#">
                 <img src={require("./img/Octocat.png")} alt="GitHub OctoCat logo" height="30px" /> on{" "}
-                <strong>Github</strong>
+                <strong>GitHub</strong>
               </a>
             </div>}{" "}
           {_.cookies().authed &&
