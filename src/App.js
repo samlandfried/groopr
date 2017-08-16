@@ -48,7 +48,7 @@ export default class App extends Component {
               makeGroups={this.makeGroups.bind(this)}
               groupsChanger={this.groupsChanger.bind(this)}
               clearGroups={this.clearGroups.bind(this)}
-            />}
+            />
           }{" "}
         </section>{" "}
       </div>
