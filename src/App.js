@@ -32,15 +32,8 @@ export default class App extends Component {
             <h1>Groopr</h1>{" "}
             {_.cookies().authed &&
               this.state.user &&
-              <div className="user-authed">
-                <UserInfo user={this.state.user} />{" "}
-                <input
-                  type="submit"
-                  value="Logout"
-                  className="button"
-                  onClick={this.logOut}
-                />{" "}
-              </div>}{" "}
+                <UserInfo user={this.state.user} logout={this.logOut}/>
+              }
           </div>
         </nav>
         <section className="main">

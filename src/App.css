@@ -15,13 +15,39 @@ body {
 }
 
 nav h1 {
-  padding: 0;
   margin: 0;
+  padding-right: 25px;
+}
+
+.logout {
+  padding: 0 10px;
+}
+
+.logout img {
+  height: 32px;
+  margin-right: 8px;
+  border-radius: 30px;
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
 }
 
 .logo {
   padding-right: 25px;
   height: 50px;
+}
+
+.user-info {
+  display: inherit;
+  align-items: center;
+}
+
+.user-info img {
+  width: 36px;
+  height: 36px;
+  border-radius: 60px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .landing {
@@ -58,33 +84,6 @@ nav h1 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 5px;
-  padding: 3px 15px;
-  background-color: mediumslateblue;
-}
-
-.user-info h4 {
-  padding: 0px;
-  margin: 0px;
-  height: 100%;
-  color: azure;
-}
-
-.user-info img {
-  width: 36px;
-  height: 36px;
-  margin-left: 15px;
-  border-radius: 60px;
-  border-width: 1px;
-  border-style: solid;
-  padding: 0px;
 }
 
 .options,

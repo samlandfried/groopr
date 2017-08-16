@@ -1,14 +1,13 @@
 import React, { Component } from "react";
+import { Button } from "react-materialize";
 
 export default class UserInfo extends Component {
   render() {
     return (
-      <div className="user-info">
-        <h4>
-          Welcome, {this.props.user.name}!
-        </h4>
+      <Button className="logout" onClick={this.props.logout}>
         <img src={this.props.user.image} />
-      </div>
+        Logout
+      </Button>
     );
   }
 }
