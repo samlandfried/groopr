@@ -9,12 +9,12 @@ export default class Landing extends Component {
   render() {
     return (
       <div className="landing">
-        <p id="landing-blurb">
+        <p className="text-on-image">
           Groopr quickly and intelligently assigns members of your Slack team
           into groups so they can focus on working instead of, well, grouping.
         </p>
         <AddToSlack />
-        <p>or read about everything Groopr can do</p>
+        <p className="text-on-image">or read about everything Groopr can do</p>
         <a className="btn" href="https://www.github.com/samlandfried/poodr-react">
           <img
             src={require("../img/Octocat.png")}

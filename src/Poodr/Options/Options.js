@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col, Input, Card, Button } from "react-materialize";
+import { Row, Col, Input, Card, CardPanel, Button } from "react-materialize";
 import $ from "jquery";
 
 export default class Options extends Component {
@@ -11,7 +11,7 @@ export default class Options extends Component {
   render() {
     return (
       <Col m={6} s={12}>
-        <Card className="white">
+        <CardPanel>
           <form id="grouping-options">
             <Button id="make-groups" onClick={this.props.makeGroups}>
               Make Groups
@@ -141,7 +141,7 @@ export default class Options extends Component {
               </table>
             </Row>
           </form>
-        </Card>
+        </CardPanel>
       </Col>
     );
   }

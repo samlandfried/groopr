@@ -12,7 +12,7 @@ export default class Groups extends Component {
                 const groupWidth = group.members.length < 5 ? 226 : 334;
                 return (
                   <CardPanel
-                    className="white group"
+                    className="group"
                     key={group.id}
                     data-group_id={group.id}
                     onDrop={this.props.dropHandler}

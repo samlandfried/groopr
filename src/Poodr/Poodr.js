@@ -29,7 +29,9 @@ export default class Poodr extends Component {
               messagePeeps={this.messagePeeps.bind(this)}
               clearGroups={this.props.clearGroups}
             />{" "}
-            {" "}
+            <p className="text-on-image">
+              Click and drag to rearrange. Click to disable.
+            </p>
             <Groups
               token={this.props.botToken}
               groups={this.props.groups}

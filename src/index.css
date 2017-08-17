@@ -14,6 +14,14 @@ button {
   margin: 12px;
 }
 
+textarea {
+  background-color: white;
+}
+
+.card-panel {
+  background-color: #e0f2f1;
+}
+
 .nav-wrapper {
   padding: 0;
   margin: 0;
@@ -55,15 +63,18 @@ nav h1 {
   border-style: solid;
 }
 
+.text-on-image {
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  text-shadow: 1px 1px black;
+}
+
 .landing {
   margin-top: 75px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: white;
-  text-align: center;
-  font-size: 16px;
-  text-shadow: 1px 1px black;
 }
 
 .landing p {
@@ -152,6 +163,7 @@ td {
 .group {
   display: flex;
   flex-wrap: wrap;
+  background-color: #e0f2f1;
   padding: 4px;
   margin: 6px;
   min-width: 96px;
@@ -162,7 +174,7 @@ td {
   max-width: 82px;
   padding: 5px;
   margin: 3px 4px;
-  background-color: #ee6e73;
+  background-color: #4db6ac;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
