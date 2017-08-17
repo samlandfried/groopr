@@ -15,7 +15,7 @@ export default class Landing extends Component {
           into groups so they can focus on working instead of, well, grouping.
         </p>
         <AddToSlack />
-        <p className="text-on-image">or read about everything Groopr can do</p>
+        <p className="text-on-image">or checkout the code</p>
         <a className="btn" href="https://www.github.com/samlandfried/poodr-react">
           <img
             src={require("../img/Octocat.png")}
