@@ -74,6 +74,15 @@ nav h1 {
   margin-top: 75px;
   display: flex;
   align-items: center;
+}
+
+.landing .video {
+  margin-left: 75px;
+}
+
+.landing .text {
+  display: flex;
+  align-items: center;
   flex-direction: column;
 }
 

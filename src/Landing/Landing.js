@@ -9,6 +9,7 @@ export default class Landing extends Component {
   render() {
     return (
       <div className="landing">
+        <div className="text">
         <p className="text-on-image">
           Groopr quickly and intelligently assigns members of your Slack team
           into groups so they can focus on working instead of, well, grouping.
@@ -23,6 +24,10 @@ export default class Landing extends Component {
           />{" "}
           on <strong>GitHub</strong>
         </a>
+        </div>
+        <div className="video">
+        <iframe src="https://player.vimeo.com/video/229936732?autoplay=1&loop=1&title=0&byline=0&portrait=0" width="640" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
       </div>
     );
   }
