@@ -16,7 +16,7 @@ export default class Landing extends Component {
         </p>
         <AddToSlack />
         <p className="text-on-image">or checkout the code</p>
-        <a className="btn" href="https://www.github.com/samlandfried/poodr-react">
+        <a className="btn" href="https://www.github.com/samlandfried/groopr">
           <img
             src={require("../img/Octocat.png")}
             alt="GitHub OctoCat logo"

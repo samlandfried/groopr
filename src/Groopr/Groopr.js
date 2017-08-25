@@ -13,7 +13,7 @@ export default class Groopr extends Component {
 
   render() {
     return (
-      <div id={"poodr"}>
+      <div id={"groopr"}>
         {" "}{this.props.groups.length === 0 &&
           <div className={"options"} id="initial-options">
             <Options
