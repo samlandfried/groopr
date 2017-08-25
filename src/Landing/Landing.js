@@ -11,7 +11,7 @@ export default class Landing extends Component {
       <div className="landing">
         <div className="text">
         <p className="text-on-image">
-          Groopr quickly and intelligently assigns members of your Slack team
+          Groopr quickly assigns members of your Slack team
           into groups so they can focus on working instead of, well, grouping.
         </p>
         <AddToSlack />
