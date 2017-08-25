@@ -32,7 +32,7 @@ export default class App extends Component {
               <img src={require("./img/groopr-logo.png")} alt="Groopr logo" />
               <h1>Groopr</h1>
             </div>
-            <a href="mailto: samlandfried@gmail.com">Give me feedback</a>
+            <a href="mailto: samlandfried@gmail.com">Send feedback</a>
             <a href="https://github.com/samlandfried/groopr/blob/master/README.md">Help</a>
             {_.cookies().authed &&
               this.state.user &&

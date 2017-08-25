@@ -17,6 +17,14 @@ Groopr helps you quickly organize Slack channels into small groups. You tell it 
 
 The groups will receive a direct message, and you will receive a groups report as a direct message from the app. 
 
+## How do I get help?
+
+If you have questions, feedback or funny jokes, contact Sam (That's me!) at samlandfried@gmail.com. I wrote this app by myself and am happy to offer whatever help I can.
+
+## Privacy
+
+I'm not interested in any of your data. I don't store it now, and never will in the future. I will never contact you, and I will never allow anyone else to contact you with any information I have access to. If someone contacts you on Slack via Groopr, they have done it using the app and don't have any information besides your Slack name. 
+
 ## How to setup in development
 
 ### Prerequisites
