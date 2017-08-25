@@ -23,7 +23,7 @@ If you have questions, feedback or funny jokes, contact Sam (That's me!) at saml
 
 ## Privacy
 
-I'm not interested in any of your data. I don't store it now, and never will in the future. I will never contact you, and I will never allow anyone else to contact you with any information I have access to. If someone contacts you on Slack via Groopr, they have done it using the app and don't have any information besides your Slack name. 
+I'm not interested in any of your data. I don't store it now, and never will in the future. I will never contact you, and I will never allow anyone else to contact you with any information I have access to.
 
 ## How to setup in development
 
