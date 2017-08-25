@@ -24,7 +24,7 @@ test.describe('UserInfo', function() {
     driver.findElement({ css: '.navbar-brand' })
       .getText()
       .then(header => {
-        assert.equal(header, 'Poodr');
+        assert.equal(header, 'Groopr');
       });
   });
 

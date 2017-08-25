@@ -16,22 +16,7 @@ export default class Options extends Component {
             <Button id="make-groups" onClick={this.props.makeGroups}>
               Make Groups
             </Button>
-            <Row className="group-strategy-and-size">
-              <div className="strategy">
-                <h3 className="options-label">Grouping Strategy</h3>
-                <Input
-                  id="grouping-strategy-select"
-                  s={12}
-                  type="select"
-                  defaultValue="recommended"
-                >
-                  <option value="perfect" disabled>
-                    Perfect
-                  </option>
-                  <option value="recommended">Recommended</option>
-                  <option value="random">Random</option>
-                </Input>
-              </div>
+            <Row>
               <div className="size">
                 <h3 className="options-label">Group Size</h3>
                 <Input
@@ -48,8 +33,6 @@ export default class Options extends Component {
                   <option value="7">7</option>
                 </Input>
               </div>
-            </Row>
-            <Row>
               <h3 className="options-label">Odd Member Strategy</h3>
               <Input
                 name="odd-member-strategy"

@@ -5,7 +5,7 @@ import Notify from "./Notify/Notify";
 import history from "./../history";
 import _ from "./../funcs";
 
-export default class Poodr extends Component {
+export default class Groopr extends Component {
   constructor() {
     super();
     this.state = {};

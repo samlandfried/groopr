@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Navbar, NavItem } from "react-materialize";
-import Poodr from "./Poodr/Poodr";
+import Groopr from "./Groopr/Groopr";
 import UserInfo from "./UserInfo/UserInfo";
 import Landing from "./Landing/Landing";
 import $ from "jquery";
@@ -40,7 +40,7 @@ export default class App extends Component {
         <section className="main">
           {" "}{!_.cookies().authed && <Landing />}
           {_.cookies().authed &&
-            <Poodr
+            <Groopr
               user={this.state.user}
               botToken={_.cookies().bot_token}
               userToken={_.cookies().user_token}
@@ -117,8 +117,6 @@ export default class App extends Component {
 
   getFormVals() {
     const form = document.querySelector("#grouping-options");
-    const groupingStrategy = form.querySelector("#grouping-strategy-select")
-      .value;
     const groupSize = form.querySelector("#group-size-select").value;
     const oddMemberStrategy = document.querySelector(
       'input[name="odd-member-strategy"]:checked'
@@ -135,7 +133,6 @@ export default class App extends Component {
       channels: channels,
       usergroups: usergroups,
       oddMemberStrategy: oddMemberStrategy,
-      groupingStrategy: groupingStrategy
     };
   }
 

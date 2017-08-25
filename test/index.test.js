@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const { Builder, By, until } = require('selenium-webdriver');
 const test = require('selenium-webdriver/testing');
 
-test.describe('Poodr', function() {
+test.describe('Groopr', function() {
   this.timeout(10000);
 
   const addr = 'http://localhost:3000';
@@ -24,7 +24,7 @@ test.describe('Poodr', function() {
     driver.findElement({ css: '.navbar-brand' })
       .getText()
       .then(header => {
-        assert.equal(header, 'Poodr');
+        assert.equal(header, 'Groopr');
       });
   });
 
