@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class AddToSlack extends Component {
   render() {
-    const url = `https://slack.com/oauth/authorize?scope=bot&client_id=${process.env.REACT_APP_SLACK_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SLACK_CALLBACK}&pretty=1`
+    const url = `https://slack.com/oauth/authorize?scope=bot,commands&client_id=${process.env.REACT_APP_SLACK_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_SLACK_CALLBACK}&pretty=1`
     return (
     <a
       id="addToSlackBtn"
