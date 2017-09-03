@@ -141,7 +141,7 @@ export default class App extends Component {
   makeGroups(event) {
     event.preventDefault();
     const options = this.getFormVals();
-    const token = _.cookies().user_token;
+    const token = _.cookies().bot_token;
 
     const channels = options.channels.map(channel => {
       const url =
@@ -170,6 +170,7 @@ export default class App extends Component {
     });
 
     const promises = channels.concat(usergroups);
+
     Promise.all(promises).then(channelGroups => {
       const userIds = channelGroups.reduce((users, channelGroup) => {
         if (channelGroup.ok) {
