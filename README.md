@@ -1,5 +1,6 @@
 # Groopr
 
+
 Groopr helps you quickly organize Slack channels into small groups. You tell it what channels and usergroups you want to include in the groups, it makes the groups, you finetune them, and then it sends a direct message to the groups to notify them. It also sends you a direct message including a description of all the groups created. 
 
 ## How to use
